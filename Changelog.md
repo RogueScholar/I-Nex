@@ -1,3 +1,10 @@
+# I-Nex Changelog
+
+[SPDX-FileCopyrightText: © 2016 eloaders <eloaders@linux.pl>]::
+
+[SPDX-License-Identifier: CC0-1.0]::
+
+## 7.6.1
 - Update ([017bee2](https://github.com/i-nex/I-Nex/commit/017bee2a335caf2e9dd85e8259bb53d2262acbd6))
 - Update QT4 to QT5 ([1fca95d](https://github.com/i-nex/I-Nex/commit/1fca95d88e8d49c8640a0d43e3681a67057d93e8))
 - Clean Code ([b33ce88](https://github.com/i-nex/I-Nex/commit/b33ce88eec560e3b3fe591b70a98856d7907799f))

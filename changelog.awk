@@ -1,4 +1,9 @@
 #!/usr/bin/awk -f
+#
+# SPDX-FileCopyrightText: © 2016 eloaders <eloaders@linux.pl>
+#
+# SPDX-License-Identifier: CC0-1.0
+# ------------------------------------------------------------------------------
 BEGIN {
 	REPO_URL = getRepoURL()
 	# Prefixes that determine whether a commit will be printed

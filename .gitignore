@@ -21,6 +21,7 @@ vgcore.*
 .startup
 .list
 .info
+.directory
 #----
 
 

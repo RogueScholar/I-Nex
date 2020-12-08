@@ -1,0 +1,19 @@
+# SPDX-FileCopyrightText: © 2020 Peter J. Mello <admin@petermello.net>
+#
+# SPDX-License-Identifier: CC0-1.0
+# Visit <http://astyle.sourceforge.net/astyle.html> for more info on AStyle.
+
+style=google
+
+lineend=linux
+suffix=none
+
+indent=spaces=2
+max-code-length=80
+
+align-pointer=name
+align-reference=name
+attach-closing-while
+delete-empty-lines
+pad-first-paren-out
+pad-header

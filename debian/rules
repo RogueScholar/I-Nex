@@ -40,3 +40,6 @@ override_dh_auto_configure:
 override_dh_auto_install:
 	dh_auto_install -O-v --exclude=$(CURDIR)/debian/i-nex/usr/bin/i-nex \
 		--exclude=$(CURDIR)/debian/i-nex/usr/share/doc/i-nex/Changelog.md --
+
+override_dh_shlibdeps:
+	dh_shlibdeps -O-v -- -l/lib/$(DEB_HOST_MULTIARCH)

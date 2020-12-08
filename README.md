@@ -1,4 +1,4 @@
-# I-Nex: a system hardware & configuration inventory tool [![I-Nex logo](I-Nex/i-nex/logo/i-nex.0.4.x.png)](https://i-nex.linux.pl/)
+# [![I-Nex logo](pixmaps/i-nex-128.png)](https://i-nex.linux.pl/) a system hardware & configuration inventory tool
 
 [SPDX-FileCopyrightText: © 2014-2016 eloaders <eloaders@linux.pl>]::
 [SPDX-FileCopyrightText: © 2020 Peter J. Mello <admin@petermello.net>]::

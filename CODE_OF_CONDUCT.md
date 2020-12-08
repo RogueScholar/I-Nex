@@ -1,5 +1,9 @@
 # Contributor Covenant Code of Conduct
 
+[SPDX-FileCopyrightText: © 2020 Peter J. Mello <admin@petermello.net>]::
+
+[SPDX-License-Identifier: CC0-1.0]::
+
 ## Our Pledge
 
 In the interest of fostering an open and welcoming environment, we as

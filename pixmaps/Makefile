@@ -10,8 +10,9 @@ all: install
 install:
 	cp $(CURDIR)/i-nex.png $(CURDIR)/i-nex-256.png
 	for px in $(IMG_SIZES) ; do \
-		$(INSTALL_DM)0644 -t $(DESTDIR)$(PREFIX)/share/icons/hicolor/$${px}x$${px}/apps \
-			$(CURDIR)/i-nex-$${px}.png ; \
+		cp -f $(CURDIR)/i-nex-$${px}.png \
+			$(DESTDIR)$(PREFIX)/share/icons/hicolor/$${px}x$${px}/apps/i-nex.png ; \
+		chmod 0644 $(DESTDIR)$(PREFIX)/share/icons/hicolor/$${px}x$${px}/apps/i-nex.png ; \
 	done
 	$(RM) $(CURDIR)/i-nex-256.png
 

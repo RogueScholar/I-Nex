@@ -14,8 +14,8 @@ clean: clean-inex clean-json
 
 distclean: clean
 	find . \( -name '.gambas' -o -name '*.gambas' -o -name '.directory' \) \
-		-type d -execdir $(RM) $(RMDIR_OPT) '{}' \+
-	cd I-Nex && $(RM) $(RMDIR_OPT) ./i-nex/.gambas ./autom4te.cache
+		-execdir $(RM) $(RMDIR_OPT) '{}' \+
+	cd I-Nex && $(RM) $(RMDIR_OPT) ./autom4te.cache
 	cd I-Nex && $(RM) config.log config.status configure install-sh missing
 
 sysclean:
