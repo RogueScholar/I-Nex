@@ -1,25 +1,16 @@
 ' Gambas class file
-
-' Copyright(C) 2011-2014, Michał Głowienka aka eloaders <eloaders@linux.pl>
 '
-' This program is free software; you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation; either version 3 of the License, or
-' (at your option) any later version.
+' SPDX-FileCopyrightText: © 2012-2016 Michał Głowienka <eloaders@linux.pl>
+' SPDX-FileCopyrightText: © 2020 Peter J. Mello <admin@petermello.net>
 '
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-'
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' SPDX-License-Identifier: GPL-3.0-or-later
+' ------------------------------------------------------------------------------
 
 Public Sub Form_Open()
   Dim PASTEBIN_SITES As String[] = Dir("/usr/share/pastebin.d/")
   Dim Conf As Integer
-  If Exist("~/.i-nex/lastsave") Then
-   ButtonBox1.Text = File.Load("" & User.Home & "/.i-nex/lastsave")
+  If Exist("~/.config/i-nex/lastsave") Then
+   ButtonBox1.Text = File.Load("" & User.Home & "/.config/i-nex/lastsave")
   Else
    ButtonBox1.Text = Desktop.Path & "/report.txt"
   Endif
@@ -29,7 +20,7 @@ Public Sub Form_Open()
   Next
   ComboBox1.List = PASTEBIN_SITES
   ComboBox1.Index = 0
-  
+
   If Settings["Window/X"] = Null Then
      Me.Center
   Else
@@ -137,7 +128,7 @@ End
 
 Public Sub ButtonBox1_Click()
   Dim savefile As String
- 
+
   If ChkPrm.ChkExec("kdialog") = True Then
      Exec ["kdialog", "--getsaveurl", "~/", ".txt"] Wait To savefile
   Else If ChkPrm.ChkExec("yad") = True Then
@@ -156,20 +147,20 @@ Public Sub ButtonBox1_Click()
   If Exist(ButtonBox1.Text, True) Then
   Try Kill ButtonBox1.Text
   Endif
-  
+
 End
 
 Public Sub Button2_Click()
- 
+
  Form_Close()
- 
+
 End
 
 
 Public Sub Button3_Click()
  If TextBox1.Text Like "*http*" Then
   Desktop.Open(TextBox1.Text)
- Else 
+ Else
   Debug "Pastebin link not detect"
   Message.Warning("Please select the Send to pastebin and then click on the  generate button.\nThis will take you to pastebin site. ")
  Endif
@@ -185,7 +176,7 @@ Public Sub Button4_Click()
 End
 
 Public Sub Form_Close()
-  File.Save("" & User.Home & "/.i-nex/lastsave", ButtonBox1.Text)
+  File.Save("" & User.Home & "/.config/i-nex/lastsave", ButtonBox1.Text)
   Me.Close
- 
+
 End

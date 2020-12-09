@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 # -*- mode: makefile-gmake; coding: utf-8 -*-
 #
-# SPDX-FileCopyrightText: © 2013-2016 eloaders <eloaders@linux.pl>
+# SPDX-FileCopyrightText: © 2013-2016 Michał Głowienka <eloaders@linux.pl>
 # SPDX-FileCopyrightText: © 2020 Peter J. Mello <admin@petermello.net>
 #
 # SPDX-License-Identifier: LGPL-3.0-or-later
@@ -13,8 +13,9 @@ all: make
 
 make: build-inex build-json
 
-install: install-inex install-json install-changelogs install-desktop-files \
-	install-manpages install-pixmaps install-udev-rule link-inex
+install: install-json install-changelogs install-desktop-files \
+	install-manpages install-pixmaps install-scripts install-udev-rule | \
+	install-inex link-inex
 
 clean: clean-inex clean-json
 
@@ -63,13 +64,21 @@ install-pixmaps:
 	@echo -e '$(OK_BGCOLOR)Installing application icons...$(NO_COLOR)'
 	$(MAKE) -C pixmaps
 
+install-scripts:
+	@echo -e '$(OK_BGCOLOR)Installing application helper scripts...$(NO_COLOR)'
+	$(INSTALL_DM)0644 -t $(DESTDIR)$(PREFIX)/share/i-nex \
+		$(CURDIR)/I-Nex/i-nex/Data/gputemp \
+		$(CURDIR)/I-Nex/i-nex/Data/i-nex-lspci \
+		$(CURDIR)/I-Nex/i-nex/Data/screenfetch-dev
+
 install-udev-rule:
 	@echo -e '$(OK_BGCOLOR)Installing udev rules...$(NO_COLOR)'
 	$(INSTALL_DM)0644 $(CURDIR)/i2c_smbus.rules \
 		$(DESTDIR)$(UDEV_RULES_DIR)/60-i2c_smbus.rules
 
 link-inex: install-inex
-	@echo -e '$(OK_BGCOLOR)Creating symlink to launch as `inex'...$(NO_COLOR)'
+	@echo -e \
+		"\$(OK_BGCOLOR)Creating symlink to launch as \`i-nex'...\$(NO_COLOR)"
 	install -d $(DESTDIR)$(bindir)
 	ln -s $(DESTDIR)$(bindir)/i-nex.gambas $(DESTDIR)$(bindir)/i-nex
 
@@ -85,5 +94,5 @@ clean-json:
 
 .PHONY: all make install clean distclean sysclean build-inex build-json \
 	install-inex install-json install-changelogs install-desktop-files \
-	install-manpages install-pixmaps install-udev-rule link-inex clean-inex \
-	clean-json
+	install-manpages install-pixmaps install-scripts install-udev-rule \
+	link-inex clean-inex clean-json

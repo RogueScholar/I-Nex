@@ -1,8 +1,9 @@
 Installation Instructions
 *************************
 
-Copyright (C) 1994-1996, 1999-2002, 2004-2013 Free Software Foundation,
-Inc.
+SPDX-FileCopyrightText: © 1994-96, 1999-2002, 2004-13 Free Software Foundation
+
+SPDX-License-Identifier: GPL-3.0-or-later WITH Autoconf-exception-3.0
 
    Copying and distribution of this file, with or without modification,
 are permitted in any medium without royalty provided the copyright

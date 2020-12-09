@@ -1,4 +1,10 @@
 ' Gambas module file
+'
+' SPDX-FileCopyrightText: © 2013-2016 Michał Głowienka <eloaders@linux.pl>
+' SPDX-FileCopyrightText: © 2020 Peter J. Mello <admin@petermello.net>
+'
+' SPDX-License-Identifier: LGPL-3.0-or-later
+' ------------------------------------------------------------------------------
 
 Public Sub Main()
 
@@ -8,13 +14,13 @@ Public Sub Main()
   ' hSettings = New Settings("~/test.conf")
   ' hSettings["Cat1/Values"] = [False, False, False, False]
   ' hSettings.Save
-  
-  hSettings = New Settings("~/.i-nex/i-nex.conf")
+
+  hSettings = New Settings("~/.config/i-nex/i-nex.conf")
   b = hSettings["Cat1/Values"]
   b[1] = True
   hSettings["Cat1/Values"] = b
   hSettings.Save
-  
+
   ' Settings.Save hSettings["localhost/Login"] = ""
   ' hSettings["Charlie/Login"] = "Toto"
   ' Dump(hSettings)
@@ -23,7 +29,7 @@ Public Sub Main()
   ' hSettings.Clear("Charlie")   ' don't work, found, removed
   ' Dump(hSettings)
   ' hSettings.Save() ' on save reloaded by "Sub Load()" from file
-  
+
 End
 
 Private Sub Dump(hSettings As Settings)
@@ -32,12 +38,12 @@ Private Sub Dump(hSettings As Settings)
   Dim sKey As String
 
   For Each sSlot In hSettings.Keys
-    
+
     Print "["; sSlot; "]"
     For Each sKey In hSettings.Keys[sSlot]
       Print sKey; "="; hSettings[sSlot &/ sKey]
     Next
-    
+
   Next
   Print
 

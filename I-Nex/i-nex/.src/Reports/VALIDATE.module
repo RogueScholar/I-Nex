@@ -1,4 +1,10 @@
 ' Gambas module file
+'
+' SPDX-FileCopyrightText: © 2014 Michał Głowienka <eloaders@linux.pl>
+' SPDX-FileCopyrightText: © 2020 Peter J. Mello <admin@petermello.net>
+'
+' SPDX-License-Identifier: GPL-3.0-or-later
+' ------------------------------------------------------------------------------
 
 Public REQUEST_ID As Collection
 Public VARIABLES_STREAM As String
@@ -130,14 +136,14 @@ VALIDATE_VARIABLES.Add(Finfosys.UNAME, "UNAME")
 VALIDATE_VARIABLES.Add(Finfosys.USAGE, "USAGE")
 
 ScreenShot.pic = Desktop.Screenshot(Finfosys.X, Finfosys.Y, Finfosys.W + 12, Finfosys.H + 30)
-ScreenShot.pic.Save("~/.i-nex/datata.png", 9)
+ScreenShot.pic.Save("~/.config/i-nex/datata.png", 9)
 Wait 1.0
-temporr = Base64(File.Load(User.Home &/ ".i-nex/datata.png"))
+temporr = Base64(File.Load(User.Home &/ ".config/i-nex/datata.png"))
 
 VALIDATE_VARIABLES.Add(temporr, "SCREENSHOT")
 VARIABLES_STREAM = JSON.Encode(VALIDATE_VARIABLES)
-File.Save(User.Home & "/.i-nex/VALID.datasrc", VARIABLES_STREAM)
-File.Save(User.Home & "/.i-nex/VALID", Base64(VARIABLES_STREAM))
+File.Save(User.Home & "/.config/i-nex/VALID.datasrc", VARIABLES_STREAM)
+File.Save(User.Home & "/.config/i-nex/VALID", Base64(VARIABLES_STREAM))
 End
 
 Public Function SendReportToServer(whereisfile As String, Submit As String, Url As String, Optional user_name As String, Optional api_key As String) As String

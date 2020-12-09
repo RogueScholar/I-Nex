@@ -1,4 +1,10 @@
 ' Gambas module file
+'
+' SPDX-FileCopyrightText: © 2016 Michał Głowienka <eloaders@linux.pl>
+' SPDX-FileCopyrightText: © 2020 Peter J. Mello <admin@petermello.net>
+'
+' SPDX-License-Identifier: LGPL-3.0-or-later
+' ------------------------------------------------------------------------------
 
 Private sa As ScrollArea
 Public aScan As String[]
@@ -15,8 +21,8 @@ Public Sub System()
   SCREENFETCH_P = Exec ["" & ChkPrm.ChkExecDir("bash") & ""] For Write
   Write #SCREENFETCH_P, File.Load("Data/screenfetch-dev")
   SCREENFETCH_P.Wait
-  SCREENFETCH = JSON.Decode(File.Load(User.Home & "/.i-nex/screenfetch.json"))
-  
+  SCREENFETCH = JSON.Decode(File.Load(User.Home & "/.config/i-nex/screenfetch.json"))
+
   Shell "cat /etc/timezone | grep ^TIMEZONE= /etc/sysconfig/clock | cut -d '=' -f 2" Wait To timezone
   If timezone = Null Or "" Then
     Shell "timedatectl status | grep \"Time zone:\" | cut -d \":\" -f 2 | cut -d \"(\" -f 1" Wait To timezone
@@ -53,7 +59,7 @@ Public Sub System()
     .Border = False
     .ReadOnly = True
   End With
-  
+
   With TextBox = New TextBox(sa) As "DISTRO_RELEASE"
     .X = Finfosys.GridView2.Columns[0].X
     .Y = Finfosys.GridView2.Rows[1].Y
@@ -63,7 +69,7 @@ Public Sub System()
     .Border = False
     .ReadOnly = True
   End With
-  
+
   With TextBox = New TextBox(sa) As "DESKTOP_ENVIRONMENT"
     .X = Finfosys.GridView2.Columns[0].X
     .Y = Finfosys.GridView2.Rows[2].Y
@@ -73,7 +79,7 @@ Public Sub System()
     .Border = False
     .ReadOnly = True
   End With
-  
+
   With TextBox = New TextBox(sa) As "WINDOW_MANAGER"
     .X = Finfosys.GridView2.Columns[0].X
     .Y = Finfosys.GridView2.Rows[3].Y
@@ -83,7 +89,7 @@ Public Sub System()
     .Border = False
     .ReadOnly = True
   End With
-  
+
   With TextBox = New TextBox(sa) As "WINDOW_MANAGER_THEME"
     .X = Finfosys.GridView2.Columns[0].X
     .Y = Finfosys.GridView2.Rows[4].Y
@@ -93,7 +99,7 @@ Public Sub System()
     .Border = False
     .ReadOnly = True
   End With
-  
+
   With TextBox = New TextBox(sa) As "GTK2_THEME"
     .X = Finfosys.GridView2.Columns[0].X
     .Y = Finfosys.GridView2.Rows[5].Y
@@ -103,7 +109,7 @@ Public Sub System()
     .Border = False
     .ReadOnly = True
   End With
-  
+
   With TextBox = New TextBox(sa) As "GTK3_THEME"
     .X = Finfosys.GridView2.Columns[0].X
     .Y = Finfosys.GridView2.Rows[6].Y
@@ -113,7 +119,7 @@ Public Sub System()
     .Border = False
     .ReadOnly = True
   End With
-  
+
   With TextBox = New TextBox(sa) As "GTK_FONT"
     .X = Finfosys.GridView2.Columns[0].X
     .Y = Finfosys.GridView2.Rows[7].Y
@@ -123,7 +129,7 @@ Public Sub System()
     .Border = False
     .ReadOnly = True
   End With
-  
+
   With TextBox = New TextBox(sa) As "GTK_ICONS"
     .X = Finfosys.GridView2.Columns[0].X
     .Y = Finfosys.GridView2.Rows[8].Y
@@ -133,7 +139,7 @@ Public Sub System()
     .Border = False
     .ReadOnly = True
   End With
-  
+
   With TextBox = New TextBox(sa) As "SYSTEM_SHELL"
     .X = Finfosys.GridView2.Columns[0].X
     .Y = Finfosys.GridView2.Rows[9].Y
@@ -172,7 +178,7 @@ Public Sub System()
     .Border = False
     .ReadOnly = True
   End With
-  
+
   With TextBox = New TextBox(sa) As "ARCH"
     .X = Finfosys.GridView3.Columns[0].X
     .Y = Finfosys.GridView3.Rows[2].Y
@@ -182,7 +188,7 @@ Public Sub System()
     .Border = False
     .ReadOnly = True
   End With
-  
+
   With TextBox = New TextBox(sa) As "TIMEZONE"
     .X = Finfosys.GridView3.Columns[0].X
     .Y = Finfosys.GridView3.Rows[3].Y
@@ -192,7 +198,7 @@ Public Sub System()
     .Border = False
     .ReadOnly = True
   End With
-  
+
   With TextBox = New TextBox(sa) As "XORG_VERSION"
     .X = Finfosys.GridView3.Columns[0].X
     .Y = Finfosys.GridView3.Rows[4].Y
@@ -202,7 +208,7 @@ Public Sub System()
     .Border = False
     .ReadOnly = True
   End With
-  
+
   With TextBox = New TextBox(sa) As "GLX_VERSION"
     .X = Finfosys.GridView3.Columns[0].X
     .Y = Finfosys.GridView3.Rows[5].Y
@@ -214,7 +220,7 @@ Public Sub System()
   End With
 
   Distribution_Detect._inits
-  
+
   With TextBox = New TextBox(sa) As "LINUX_C_LIBRARY"
     .X = Finfosys.GridView3.Columns[1].X
     .Y = Finfosys.GridView3.Rows[0].Y
@@ -224,7 +230,7 @@ Public Sub System()
     .Border = False
     .ReadOnly = True
   End With
-  
+
   With TextBox = New TextBox(sa) As "LINUX_GNU_MAKE"
     .X = Finfosys.GridView3.Columns[1].X
     .Y = Finfosys.GridView3.Rows[1].Y
@@ -234,7 +240,7 @@ Public Sub System()
     .Border = False
     .ReadOnly = True
   End With
-  
+
   With TextBox = New TextBox(sa) As "_PPP"
     .X = Finfosys.GridView3.Columns[1].X
     .Y = Finfosys.GridView3.Rows[2].Y
@@ -254,7 +260,7 @@ Public Sub System()
     .Border = False
     .ReadOnly = True
   End With
-  
+
   With TextBox = New TextBox(sa) As "_NET_TOOLS"
     .X = Finfosys.GridView3.Columns[1].X
     .Y = Finfosys.GridView3.Rows[4].Y
@@ -264,7 +270,7 @@ Public Sub System()
     .Border = False
     .ReadOnly = True
   End With
-  
+
   With TextBox = New TextBox(sa) As "_WIRELESS_TOOLS"
     .X = Finfosys.GridView3.Columns[1].X
     .Y = Finfosys.GridView3.Rows[5].Y
@@ -274,7 +280,7 @@ Public Sub System()
     .Border = False
     .ReadOnly = True
   End With
-  
+
   With TextBox = New TextBox(sa) As "_BINUTILS"
     .X = Finfosys.GridView3.Columns[1].X
     .Y = Finfosys.GridView3.Rows[6].Y

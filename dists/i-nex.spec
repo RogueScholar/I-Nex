@@ -1,7 +1,8 @@
-#
 # spec file for package i-nex
 #
-# Copyright (c) 2014 SUSE LINUX Products GmbH, Nuernberg, Germany.
+# SPDX-FileCopyrightText: © 2014 SUSE LINUX Products GmbH, Nuernberg, Germany.
+#
+# SPDX-License-Identifier: LGPL-3.0-or-later
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -194,11 +195,11 @@ rm -rf %{buildroot}%{_datadir}/%{name}/pastebinit
 %changelog
 * Sun Dec 6 2015 <GitHub/eloarders/I-Nex/alphastar868>
 - Updated version to I-Nex 7.4.0 commit 5813d16
-- Modified specfile to match RPM versions from Rawhide - 
+- Modified specfile to match RPM versions from Rawhide -
   https://fedoraproject.org/wiki/Packaging:NamingGuidelines
 
 * Sat Oct 3 2015 <GitHub/eloarders/I-Nex/alphastar868>
-- Modified specfile to reflect commit date and short GitTag in  
+- Modified specfile to reflect commit date and short GitTag in
   RPM versions.
 
 * Fri Oct 2 2015 <GitHub/eloarders/I-Nex/alphastar868>
@@ -206,7 +207,7 @@ rm -rf %{buildroot}%{_datadir}/%{name}/pastebinit
   (GitHub Issue # 12 and 14).
 
 * Thu Oct 1 2015 <GitHub/eloarders/I-Nex/alphastar868>
-- Patched specfile for x86_64 lib64 detection and JSON 
+- Patched specfile for x86_64 lib64 detection and JSON
   O/S distro double quotes fixes (GitHub Issue # 10, 11).
 - Added i2c_tools requirement to specfile.
 - Removed %post and %postun requirements for CentOS.

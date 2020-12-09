@@ -1,28 +1,20 @@
 ' Gambas class file
+'
+' SPDX-FileCopyrightText: © 2012-2016 Michał Głowienka <eloaders@linux.pl>
+' SPDX-FileCopyrightText: © 2020 Peter J. Mello <admin@petermello.net>
+'
+' SPDX-License-Identifier: GPL-3.0-or-later
+' ------------------------------------------------------------------------------
 
-' Copyright(C) 2011-2014, Michał Głowienka aka eloaders <eloaders@linux.pl>
-'
-' This program is free software; you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation; either version 3 of the License, or
-' (at your option) any later version.
-'
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-'
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
 Public pic As Picture
 Public Sub Form_Open()
- If Not Exist(User.Home & "/.i-nex") Then
- Mkdir User.Home & "/.i-nex"
+ If Not Exist(User.Home & "/.config/i-nex") Then
+ Mkdir User.Home & "/.config/i-nex"
  Endif
- If Exist(User.Home & "/.i-nex/lastsaveg") Then
- ButtonBox1.Text = File.Load(User.Home & "/.i-nex/lastsaveg")
+ If Exist(User.Home & "/.config/i-nex/lastsaveg") Then
+ ButtonBox1.Text = File.Load(User.Home & "/.config/i-nex/lastsaveg")
  Else
- ButtonBox1.Text = Desktop.Path 
+ ButtonBox1.Text = Desktop.Path
  Endif
   If Settings["Window/X"] = Null Then
      Me.Center
@@ -51,22 +43,22 @@ End
 Public Sub Button1_Click()
 
 ScreenShot.save(ButtonBox1.Text, TextBox1.Text, ComboBox1.Text, SliderBox1.Value)
-File.Save(User.Home & "/.i-nex/lastsaveg", ButtonBox1.Text)
+File.Save(User.Home & "/.config/i-nex/lastsaveg", ButtonBox1.Text)
 
 Form_Close()
 End
 
 Public Sub ButtonBox1_Click()
- 
+
  Dialog.SelectDirectory
  Dialog.Title = "Select dir"
  ButtonBox1.Text = Dialog.Path
- 
+
 End
 
 Public Sub Form_Close()
 
- File.Save(User.Home & "/.i-nex/lastsaveg", ButtonBox1.Text)
+ File.Save(User.Home & "/.config/i-nex/lastsaveg", ButtonBox1.Text)
  Me.Close
 
 End
@@ -84,7 +76,7 @@ Public Sub ComboBox1_Click()
 End
 
 Public Sub save(directory As String, filename As String, fileformat As String, filequality As Integer)
- 
+
  Try pic.Save(directory & "/" & filename & fileformat & "", filequality)
 
 End

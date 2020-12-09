@@ -2,7 +2,7 @@
 upstream-metadata-missing-bug-tracking
 
 # Ubuntu LTS releases do not backport debhelper as responsibly as Debian
-package-uses-old-debhelper-compat-version 10
+package-uses-old-debhelper-compat-version 12
 
 # Upstream release tarballs are not cryptographically signed
 i-nex source: debian-watch-does-not-check-gpg-signature

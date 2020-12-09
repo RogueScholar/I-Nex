@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 # -*- mode: makefile-gmake; coding: utf-8 -*-
 #
-# SPDX-FileCopyrightText: © 2014-2016 eloaders <eloaders@linux.pl>
+# SPDX-FileCopyrightText: © 2014-2016 Michał Głowienka <eloaders@linux.pl>
 # SPDX-FileCopyrightText: © 2020 Peter J. Mello <admin@petermello.net>
 #
 # SPDX-License-Identifier: LGPL-3.0-or-later
@@ -33,8 +33,9 @@ SHELL                     ?= /bin/sh
 STATIC                   ::= true
 UDEV_RULES_DIR           ::= /usr/lib/udev/rules.d
 
-bindir                   ::= $(PREFIX)/bin
 sysconfdir               ::= /etc
+bindir                   ::= $(PREFIX)/bin
+appicondir               ::= $(PREFIX)/share/icons/hicolor
 
 ifeq ($(ARCH),x86)
 	additional_confflags ::= --disable-sse2

@@ -1,59 +1,29 @@
 ' Gambas module file
-
-' Copyright(C) 2011-2014, Michał Głowienka aka eloaders <eloaders@linux.pl>
 '
-' This program is free software; you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation; either version 3 of the License, or
-' (at your option) any later version.
+' SPDX-FileCopyrightText: © 2013-2016 Michał Głowienka <eloaders@linux.pl>
+' SPDX-FileCopyrightText: © 2020 Peter J. Mello <admin@petermello.net>
 '
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-'
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' SPDX-License-Identifier: GPL-3.0-or-later
+' ------------------------------------------------------------------------------
 
 Public Logs As New Logger
 Public Sub _inits()
- Dim Do_not_print As String
- If Access(User.Home & "/", gb.Write) = False Then
-  Message.Error("Cannot write files to " & User.Home & "/.i-nex")
- Endif
+  Dim Do_not_print As String
+  If Access(User.Home & "/", gb.Write) = False Then
+  Message.Error("Cannot write files to " & User.Home & "/.config/i-nex")
+  Endif
 
- If Exist(User.Home & "/.i-nex") Then
-
-  Logs("I-Nex config directory in user/home folder exist", Logger.Info)
-  Logs("Try to remove files", Logger.Info)
-  Remove_Needed_Files()
-  Logs("Copy needed files", Logger.Info)
-  Copy_Needed_Files()
- Else
-  Logs("i-nex in home folder not exist", Logger.Error)
+  If Exist(User.Home & "/.config/i-nex") Then
+  Logs("I-Nex directory already exists in $HOME/.config folder", Logger.Info)
+  Else
+  Logs("I-Nex directory not found in $HOME/.config folder", Logger.Error)
   Create_Needed_Folders()
-  Logs("i-nex in home folder created", Logger.Info)
- Endif
+  Logs("I-Nex directory created in $HOME/.config folder", Logger.Info)
+  Endif
 
- Do_not_print = Null
-
-End
-
-Private Function Remove_Needed_Files()
-
- Try Kill User.Home & "/.i-nex/gputemp"
- Try Kill User.Home & "/.i-nex/i-nex-lspci"
-End
-
-
-Private Function Copy_Needed_Files()
- Logs("Copy gputemp from Data/gputemp to " & User.Home &/ ".i-nex/gputemp", Logger.Info)
- Try Copy "Data/gputemp" To User.Home &/ ".i-nex/gputemp"
- Try Copy "Data/i-nex-lspci" To User.Home &/ ".i-nex/i-nex-lspci"
+  Do_not_print = Null
 End
 
 Private Function Create_Needed_Folders()
-
- Try Mkdir User.Home & "/.i-nex/"
-
+  Try Mkdir User.Home & "/.config/i-nex/"
 End

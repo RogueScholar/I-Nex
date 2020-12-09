@@ -1,39 +1,18 @@
 #!/usr/bin/env bash
-
+#
 # screenFetch - a CLI Bash script to show system/theme info in screenshots
-
-# Copyright (c) 2010-2019 Brett Bohnenkamper <kittykatt@kittykatt.us>
-
-#  This program is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation, either version 3 of the License, or
-#  (at your option) any later version.
 #
-#  This program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
+# SPDX-FileCopyrightText: © 2010-2019 Brett Bohnenkamper <kittykatt@kittykatt.us>
 #
-#  You should have received a copy of the GNU General Public License
-#  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-# Yes, I do realize some of this is horribly ugly coding. Any ideas/suggestions would be
-# appreciated by emailing me or by stopping by http://github.com/KittyKatt/screenFetch. You
-# could also drop in on the IRC channel at irc://irc.rizon.net/screenFetch.
-# to put forth suggestions/ideas. Thank you.
-
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
 # Requires: bash 4.0+
 # Optional dependencies: xorg-xdpyinfo (resoluton detection)
 #                        scrot (screenshot taking)
 #                        curl (screenshot uploading)
+# ------------------------------------------------------------------------------
 
-
-#LANG=C
-#LANGUAGE=C
-#LC_ALL=C
-
-
-scriptVersion="3.9.0"
+scriptVersion="3.9.1"
 
 ######################
 # Settings for fetcher
@@ -42,49 +21,51 @@ scriptVersion="3.9.0"
 # This setting controls what ASCII logo is displayed.
 # distro="Linux"
 
-# This sets the information to be displayed. Available: distro, Kernel, DE, WM, Win_theme, Theme, Icons, Font, Background, ASCII.
-# To get just the information, and not a text-art logo, you would take "ASCII" out of the below variable.
+# This sets the information to be displayed. Available: distro, Kernel, DE, WM,
+# Win_theme, Theme, Icons, Font, Background, ASCII. To get just the information,
+# and not a text-art logo, you would take "ASCII" out of the below variable.
 valid_display=(
-		'distro'
-		'host'
-		'kernel'
-		'uptime'
-		'pkgs'
-		'shell'
-		'res'
-		'de'
-		'wm'
-		'wmtheme'
-		'gtk'
-		'disk'
-		'cpu'
-		'gpu'
-		'mem'
+  'distro'
+  'host'
+  'kernel'
+  'uptime'
+  'pkgs'
+  'shell'
+  'res'
+  'de'
+  'wm'
+  'wmtheme'
+  'gtk'
+  'disk'
+  'cpu'
+  'gpu'
+  'mem'
 )
 display=(
-		'distro'
-		'host'
-		'kernel'
-		'uptime'
-		'pkgs'
-		'shell'
-		'res'
-		'de'
-		'wm'
-		'wmtheme'
-		'gtk'
-		'cpu'
-		'disk'
-		'gpu'
-		'mem'
+  'distro'
+  'host'
+  'kernel'
+  'uptime'
+  'pkgs'
+  'shell'
+  'res'
+  'de'
+  'wm'
+  'wmtheme'
+  'gtk'
+  'cpu'
+  'disk'
+  'gpu'
+  'mem'
 )
 # Display Type: ASCII or Text
 display_type="ASCII"
 # Plain logo
 display_logo="no"
 
-# Colors to use for the information found. These are set below according to distribution.
-# If you would like to set your OWN color scheme for these, uncomment the lines below and edit them to your heart's content.
+# Colors to use for the information found. These are set below according to
+# distribution. If you would like to set your OWN color scheme for these,
+# un-comment the lines below and edit them to your heart's content.
 # textcolor="\e[0m"
 # labelcolor="\e[1;34m"
 
@@ -92,103 +73,106 @@ display_logo="no"
 # Order matters!
 # Removed WM's: compiz
 wmnames=(
-		'fluxbox'
-		'openbox'
-		'blackbox'
-		'xfwm4'
-		'metacity'
-		'kwin'
-		'twin'
-		'icewm'
-		'pekwm'
-		'flwm'
-		'flwm_topside'
-		'fvwm'
-		'dwm'
-		'awesome'
-		'wmaker'
-		'stumpwm'
-		'musca'
-		'xmonad.*'
-		'i3'
-		'ratpoison'
-		'scrotwm'
-		'spectrwm'
-		'wmfs'
-		'wmii'
-		'beryl'
-		'subtle'
-		'e16'
-		'enlightenment'
-		'sawfish'
-		'emerald'
-		'monsterwm'
-		'dminiwm'
-		'compiz'
-		'Finder'
-		'herbstluftwm'
-		'howm'
-		'notion'
-		'bspwm'
-		'cinnamon'
-		'2bwm'
-		'echinus'
-		'swm'
-		'budgie-wm'
-		'dtwm'
-		'9wm'
-		'chromeos-wm'
-		'deepin-wm'
-		'sway'
-		'mwm'
+  'fluxbox'
+  'openbox'
+  'blackbox'
+  'xfwm4'
+  'metacity'
+  'kwin'
+  'twin'
+  'icewm'
+  'pekwm'
+  'flwm'
+  'flwm_topside'
+  'fvwm'
+  'dwm'
+  'awesome'
+  'wmaker'
+  'stumpwm'
+  'musca'
+  'xmonad.*'
+  'i3'
+  'ratpoison'
+  'scrotwm'
+  'spectrwm'
+  'wmfs'
+  'wmii'
+  'beryl'
+  'subtle'
+  'e16'
+  'enlightenment'
+  'sawfish'
+  'emerald'
+  'monsterwm'
+  'dminiwm'
+  'compiz'
+  'Finder'
+  'herbstluftwm'
+  'howm'
+  'notion'
+  'bspwm'
+  'cinnamon'
+  '2bwm'
+  'echinus'
+  'swm'
+  'budgie-wm'
+  'dtwm'
+  '9wm'
+  'chromeos-wm'
+  'deepin-wm'
+  'sway'
+  'mwm'
 )
 
 # Array with full Ubuntu release codenames, used so that the script will display
 # i.e. "Ubuntu 18.04 LTS (Bionic Beaver)" instead of "Ubuntu 18.04 bionic"
 ubuntu_codenames=(
-		'(Warty Warthog)'		#  4.10
-		'(Hoary Hedgehog)'		#  5.04
-		'(Breezy Badger)'		#  5.10
-		'LTS (Dapper Drake)'	#  6.06
-		'(Edgy Eft)'			#  6.10
-		'(Feisty Fawn)'			#  7.04
-		'(Gutsy Gibbon)'		#  7.10
-		'LTS (Hardy Heron)'		#  8.04
-		'(Intrepid Ibex)'		#  8.10
-		'(Jaunty Jackalope)'	#  9.04
-		'(Karmic Koala)'		#  9.10
-		'LTS (Lucid Lynx)'		# 10.04
-		'(Maverick Meerkat)'	# 10.10
-		'(Natty Narwhal)'		# 11.04
-		'(Oneiric Ocelot)'		# 11.10
-		'LTS (Precise Pangolin)'# 12.04
-		'(Quantal Quetzal)'		# 12.10
-		'(Raring Ringtail)'		# 13.04
-		'(Saucy Salamander)'	# 13.10
-		'LTS (Trusty Tahr)'		# 14.04
-		'(Utopic Unicorn)'		# 14.10
-		'(Vivid Vervet)'		# 15.04
-		'(Wily Werewolf)'		# 15.10
-		'LTS (Xenial Xerus)'	# 16.04
-		'(Yakkety Yak)'			# 16.10
-		'(Zesty Zapus)'			# 17.04
-		'(Artful Aardvark)'		# 17.10
-		'LTS (Bionic Beaver)'	# 18.04
-		'(Cosmic Cuttlefish)'	# 18.10
-		'(Disco Dingo)'	# 19.04
-		'(Eoan Ermine)'	# 19.10
+  '(Warty Warthog)'        #  4.10
+  '(Hoary Hedgehog)'       #  5.04
+  '(Breezy Badger)'        #  5.10
+  'LTS (Dapper Drake)'     #  6.06
+  '(Edgy Eft)'             #  6.10
+  '(Feisty Fawn)'          #  7.04
+  '(Gutsy Gibbon)'         #  7.10
+  'LTS (Hardy Heron)'      #  8.04
+  '(Intrepid Ibex)'        #  8.10
+  '(Jaunty Jackalope)'     #  9.04
+  '(Karmic Koala)'         #  9.10
+  'LTS (Lucid Lynx)'       # 10.04
+  '(Maverick Meerkat)'     # 10.10
+  '(Natty Narwhal)'        # 11.04
+  '(Oneiric Ocelot)'       # 11.10
+  'LTS (Precise Pangolin)' # 12.04
+  '(Quantal Quetzal)'      # 12.10
+  '(Raring Ringtail)'      # 13.04
+  '(Saucy Salamander)'     # 13.10
+  'LTS (Trusty Tahr)'      # 14.04
+  '(Utopic Unicorn)'       # 14.10
+  '(Vivid Vervet)'         # 15.04
+  '(Wily Werewolf)'        # 15.10
+  'LTS (Xenial Xerus)'     # 16.04
+  '(Yakkety Yak)'          # 16.10
+  '(Zesty Zapus)'          # 17.04
+  '(Artful Aardvark)'      # 17.10
+  'LTS (Bionic Beaver)'    # 18.04
+  '(Cosmic Cuttlefish)'    # 18.10
+  '(Disco Dingo)'          # 19.04
+  '(Eoan Ermine)'          # 19.10
+  'LTS (Focal Fossa)'      # 20.04
+  '(Groovy Gorilla)'       # 20.10
+  '(Hirsute Hippo)'        # 21.04
 )
 
 # Screenshot Settings
-# This setting lets the script know if you want to take a screenshot or not. 1=Yes 0=No
+# This setting tells the script if you want to take a screenshot. 1=Yes 0=No
 screenshot=
-# This setting lets the script know if you want to upload the screenshot to a filehost. 1=Yes 0=No
+# This setting tells the script if you want to upload it to a host. 1=Yes 0=No
 upload=
-# This setting lets the script know where you would like to upload the file to.
+# This setting tells the script where you would like to upload the file to.
 # Valid hosts are: teknik, mediacrush, imgur, hmp, and a configurable local.
 uploadLoc=
-# You can specify a custom screenshot command here. Just uncomment and edit.
-# Otherwise, we'll be using the default command: scrot -cd3.
+# You can specify a custom screenshot command here. Just un-comment and edit.
+# Otherwise, we'll be using the default command: `scrot -cd3'.
 # screenCommand="scrot -cd5"
 shotfile=$(printf "screenFetch-%s.png" "$(date +'%Y-%m-%d_%H-%M-%S')")
 
@@ -196,36 +180,43 @@ shotfile=$(printf "screenFetch-%s.png" "$(date +'%Y-%m-%d_%H-%M-%S')")
 verbosity=
 
 
-# The below function will allow you to add custom lines of text to the screenfetch output.
-# It will automatically be executed at the right moment if use_customlines is set to 1.
+# The below function allows you to add custom lines of text to the screenshot.
+# It will automatically be executed if use_customlines is set to 1.
 use_customlines=
 customlines () {
-	# The following line can serve as an example.
-	# feel free to let the computer generate the output: e. g. using $(cat /etc/motd) or $(upower -d | grep THISORTHAT)
-	# In the example custom0 line replace <YOUR LABEL> and <your text> with options specified by you.
-	# Also make sure the $custom0 variable in out_array=... matches the one at the beginning of the line
-	#
-	custom0=$(echo -e "$labelcolor YOUR LABEL:$textcolor your text"); out_array=( "${out_array[@]}" "$custom0" ); ((display_index++));
+  # The following can serve as an example; feel free to let the computer
+  # generate the output: e.g. using "$(cat /etc/motd)" or
+  # "$(upower -d | grep THISORTHAT)". In the example custom0 line, replace
+  # `YOUR LABEL' and `your text' with your desired output. Also make sure the
+  # $custom0 variable in out_array=… matches the one at the start of the line.
+  custom0=$(echo -e "$labelcolor YOUR LABEL:$textcolor your text")
+  out_array=( "${out_array[@]}" "$custom0" )
+  ((display_index++))
 
-	# Battery percentage and time to full/empty:
-	# (uncomment lines below to use)
-	#
-	#custom1=$(echo -e "$labelcolor Battery:$textcolor $(upower -d | grep percentage | head -n1 | cut -d ' ' -f 15-)"); out_array=( "${out_array[@]}" "$custom1" ); ((display_index++));
-	#if [ "$(upower -d | grep time)" ]; then
-	#	battery_time="$(upower -d | grep time | head -n1 | cut -d ' ' -f 14-) $(upower -d | grep time | head -n1 | cut -d ' ' -f 6-7 | cut -d ':' -f1)"
-	#else
-	#	battery_time="power supply plugged in"
-	#fi
-	#custom2=$(echo -e "$labelcolor $(echo '  `->')$textcolor $battery_time"); out_array=( "${out_array[@]}" "$custom2" ); ((display_index++));
+  # Battery percentage and time to full/empty: (un-comment lines below to use)
+  # custom1=$(echo -e "$labelcolor Battery:$textcolor $(upower -d | grep percentage | head -n1 | cut -d ' ' -f 15-)")
+  # out_array=( "${out_array[@]}" "$custom1" )
+  # ((display_index++))
+  # if [ "$(upower -d | grep time)" ]; then
+  #   battery_time="$(upower -d | grep time | head -n1 | cut -d ' ' -f 14-) \
+  #   $(upower -d | grep time | head -n1 | cut -d ' ' -f 6-7 | cut -d ':' -f1)"
+  # else
+  #   battery_time="power supply plugged in"
+  # fi
+  # custom2=$(echo -e "$labelcolor $(echo '  `->')$textcolor $battery_time")
+  # out_array=( "${out_array[@]}" "$custom2" )
+  # ((display_index++))
 
-	# Display public IP:
-	#custom3=$(echo -e "$labelcolor Public IP:$textcolor $(curl -s ipinfo.io/ip)"); out_array=( "${out_array[@]}" "$custom3" ); ((display_index++));
+  # Display public IP:
+  # custom3=$(echo -e "$labelcolor Public IP:$textcolor $(curl -s ipinfo.io/ip)")
+  # out_array=( "${out_array[@]}" "$custom3" )
+  # ((display_index++))
 
-	###########################################
-	##	MY CUSTOM LINES
-	###########################################
+  ###########################################
+  ## MY CUSTOM LINES
+  ###########################################
 
-	#custom4=...
+  # custom4=...
 }
 
 
@@ -235,8 +226,8 @@ customlines () {
 
 # https://github.com/KittyKatt/screenFetch/issues/549
 if [[ "${OSTYPE}" =~ "linux" || "${OSTYPE}" == "gnu" ]]; then
-	# issue seems to affect Ubuntu; add LSB directories if it appears on other distros too
-	export GIO_EXTRA_MODULES="/usr/lib/x86_64-linux-gnu/gio/modules:/usr/lib/i686-linux-gnu/gio/modules:$GIO_EXTRA_MODULES"
+  # issue seems to affect Ubuntu; add LSB directories if it appears on other distros too
+  export GIO_EXTRA_MODULES="/usr/lib/x86_64-linux-gnu/gio/modules:/usr/lib/i686-linux-gnu/gio/modules:$GIO_EXTRA_MODULES"
 fi
 
 #########################################
@@ -252,258 +243,387 @@ gtk_2line="no"
 
 # Static Color Definitions
 colorize () {
-	printf $'\033[0m\033[38;5;%sm' "$1"
+  printf $'\033[0m\033[38;5;%sm' "$1"
 }
 getColor () {
-	local tmp_color=""
-	if [[ -n "$1" ]]; then
-		if [[ ${BASH_VERSINFO[0]} -ge 4 ]]; then
-			if [[ ${BASH_VERSINFO[0]} -eq 4 && ${BASH_VERSINFO[1]} -gt 1 ]] || [[ ${BASH_VERSINFO[0]} -gt 4 ]]; then
-				tmp_color=${1,,}
-			else
-				tmp_color="$(tr '[:upper:]' '[:lower:]' <<< "${1}")"
-			fi
-		else
-			tmp_color="$(tr '[:upper:]' '[:lower:]' <<< "${1}")"
-		fi
-		case "${tmp_color}" in
-			# Standards
-			'black')					color_ret='\033[0m\033[30m';;
-			'red')						color_ret='\033[0m\033[31m';;
-			'green')					color_ret='\033[0m\033[32m';;
-			'brown')					color_ret='\033[0m\033[33m';;
-			'blue')						color_ret='\033[0m\033[34m';;
-			'purple')					color_ret='\033[0m\033[35m';;
-			'cyan')						color_ret='\033[0m\033[36m';;
-			'yellow')					color_ret='\033[0m\033[1;33m';;
-			'white')					color_ret='\033[0m\033[1;37m';;
-			# Bolds
-			'dark grey'|'dark gray')	color_ret='\033[0m\033[1;30m';;
-			'light red')				color_ret='\033[0m\033[1;31m';;
-			'light green')				color_ret='\033[0m\033[1;32m';;
-			'light blue')				color_ret='\033[0m\033[1;34m';;
-			'light purple')				color_ret='\033[0m\033[1;35m';;
-			'light cyan')				color_ret='\033[0m\033[1;36m';;
-			'light grey'|'light gray')	color_ret='\033[0m\033[37m';;
-			# Some 256 colors
-			'orange')					color_ret="$(colorize '202')";; #DarkOrange
-			'light orange') 			color_ret="$(colorize '214')";; #Orange1
-			# HaikuOS
-			'black_haiku') 				color_ret="$(colorize '7')";;
-			#ROSA color
-			'rosa_blue') 				color_ret='\033[01;38;05;25m';;
-			# ArcoLinux
-			'arco_blue') color_ret='\033[1;38;05;111m';;
-		esac
-		[[ -n "${color_ret}" ]] && echo "${color_ret}"
-	fi
+  local tmp_color=""
+  if [[ -n "$1" ]]; then
+    if [[ ${BASH_VERSINFO[0]} -ge 4 ]]; then
+      if [[ ${BASH_VERSINFO[0]} -eq 4 && ${BASH_VERSINFO[1]} -gt 1 ]] || [[ ${BASH_VERSINFO[0]} -gt 4 ]]; then
+        tmp_color=${1,,}
+      else
+        tmp_color="$(tr '[:upper:]' '[:lower:]' <<< "${1}")"
+      fi
+    else
+      tmp_color="$(tr '[:upper:]' '[:lower:]' <<< "${1}")"
+    fi
+    case "${tmp_color}" in
+      # Standards
+      'black')
+        color_ret='\033[0m\033[30m'
+        ;;
+      'red')
+        color_ret='\033[0m\033[31m'
+        ;;
+      'green')
+        color_ret='\033[0m\033[32m'
+        ;;
+      'brown')
+        color_ret='\033[0m\033[33m'
+        ;;
+      'blue')
+        color_ret='\033[0m\033[34m'
+        ;;
+      'purple')
+        color_ret='\033[0m\033[35m'
+        ;;
+      'cyan')
+        color_ret='\033[0m\033[36m'
+        ;;
+      'yellow')
+        color_ret='\033[0m\033[1;33m'
+        ;;
+      'white')
+        color_ret='\033[0m\033[1;37m'
+        ;;
+      # Bolds
+      'dark grey'|'dark gray')
+        color_ret='\033[0m\033[1;30m'
+        ;;
+      'light red')
+        color_ret='\033[0m\033[1;31m'
+        ;;
+      'light green')
+        color_ret='\033[0m\033[1;32m'
+        ;;
+      'light blue')
+        color_ret='\033[0m\033[1;34m'
+        ;;
+      'light purple')
+        color_ret='\033[0m\033[1;35m'
+        ;;
+      'light cyan')
+        color_ret='\033[0m\033[1;36m'
+        ;;
+      'light grey'|'light gray')
+        color_ret='\033[0m\033[37m'
+        ;;
+      # Some 256 colors
+      'orange')  # DarkOrange
+        color_ret="$(colorize '202')"
+        ;;
+      'light orange') # Orange1
+        color_ret="$(colorize '214')"
+        ;;
+      # HaikuOS
+      'black_haiku')
+        color_ret="$(colorize '7')"
+        ;;
+      # ROSA color
+      'rosa_blue')
+        color_ret='\033[01;38;05;25m'
+        ;;
+      # ArcoLinux
+      'arco_blue')
+        color_ret='\033[1;38;05;111m'
+        ;;
+    esac
+    [[ -n "${color_ret}" ]] && echo "${color_ret}"
+  fi
 }
 
 verboseOut () {
-	if [[ "$verbosity" -eq "1" ]]; then
-		printf '\033[1;31m:: \033[0m%s\n' "$1"
-	fi
+  if [[ "$verbosity" -eq "1" ]]; then
+    printf '\033[1;31m:: \033[0m%s\n' "$1"
+  fi
 }
 
 errorOut () {
-	printf '\033[1;37m[[ \033[1;31m! \033[1;37m]] \033[0m%s\n' "$1"
+  printf '\033[1;37m[[ \033[1;31m! \033[1;37m]] \033[0m%s\n' "$1"
 }
 stderrOut () {
-	while IFS='' read -r line; do
-		printf '\033[1;37m[[ \033[1;31m! \033[1;37m]] \033[0m%s\n' "$line"
-	done
+  while IFS='' read -r line; do
+    printf '\033[1;37m[[ \033[1;31m! \033[1;37m]] \033[0m%s\n' "$line"
+  done
 }
-
 
 ####################
 #  Color Defines
 ####################
 
 colorNumberToCode () {
-	local number="$1"
-	if [[ "${number}" == "na" ]]; then
-		unset code
-	elif [[ $(tput colors) -eq "256" ]]; then
-		code=$(colorize "${number}")
-	else
-		case "$number" in
-			0|00) code=$(getColor 'black');;
-			1|01) code=$(getColor 'red');;
-			2|02) code=$(getColor 'green');;
-			3|03) code=$(getColor 'brown');;
-			4|04) code=$(getColor 'blue');;
-			5|05) code=$(getColor 'purple');;
-			6|06) code=$(getColor 'cyan');;
-			7|07) code=$(getColor 'light grey');;
-			8|08) code=$(getColor 'dark grey');;
-			9|09) code=$(getColor 'light red');;
-			  10) code=$(getColor 'light green');;
-			  11) code=$(getColor 'yellow');;
-			  12) code=$(getColor 'light blue');;
-			  13) code=$(getColor 'light purple');;
-			  14) code=$(getColor 'light cyan');;
-			  15) code=$(getColor 'white');;
-			*) unset code;;
-		esac
-	fi
-	echo -n "${code}"
+  local number="$1"
+  if [[ "${number}" == "na" ]]; then
+    unset code
+  elif [[ $(tput colors) -eq "256" ]]; then
+    code=$(colorize "${number}")
+  else
+    case "$number" in
+      0|00)
+        code=$(getColor 'black')
+        ;;
+      1|01)
+        code=$(getColor 'red')
+        ;;
+      2|02)
+        code=$(getColor 'green')
+        ;;
+      3|03)
+        code=$(getColor 'brown')
+        ;;
+      4|04)
+        code=$(getColor 'blue')
+        ;;
+      5|05)
+        code=$(getColor 'purple')
+        ;;
+      6|06)
+        code=$(getColor 'cyan')
+        ;;
+      7|07)
+        code=$(getColor 'light grey')
+        ;;
+      8|08)
+        code=$(getColor 'dark grey')
+        ;;
+      9|09) code=$(getColor 'light red')
+        ;;
+      10)
+        code=$(getColor 'light green')
+        ;;
+      11)
+        code=$(getColor 'yellow')
+        ;;
+      12)
+        code=$(getColor 'light blue')
+        ;;
+      13)
+        code=$(getColor 'light purple')
+        ;;
+      14)
+        code=$(getColor 'light cyan')
+        ;;
+      15)
+        code=$(getColor 'white')
+        ;;
+      *)
+        unset code
+        ;;
+    esac
+  fi
+  echo -n "${code}"
 }
-
 
 detectColors () {
-	my_colors=$(sed 's/^,/na,/;s/,$/,na/;s/,/ /' <<< "${OPTARG}")
-	my_lcolor=$(awk -F' ' '{print $1}' <<< "${my_colors}")
-	my_lcolor=$(colorNumberToCode "${my_lcolor}")
-	my_hcolor=$(awk -F' ' '{print $2}' <<< "${my_colors}")
-	my_hcolor=$(colorNumberToCode "${my_hcolor}")
+  my_colors=$(sed 's/^,/na,/;s/,$/,na/;s/,/ /' <<< "${OPTARG}")
+  my_lcolor=$(awk -F' ' '{print $1}' <<< "${my_colors}")
+  my_lcolor=$(colorNumberToCode "${my_lcolor}")
+  my_hcolor=$(awk -F' ' '{print $2}' <<< "${my_colors}")
+  my_hcolor=$(colorNumberToCode "${my_hcolor}")
 }
 
-supported_distros="ALDOS, Alpine Linux, Amazon Linux, Antergos, Arch Linux (Old and Current Logos), ArcoLinux, Artix Linux, \
-blackPanther OS, BLAG, BunsenLabs, CentOS, Chakra, Chapeau, Chrome OS, Chromium OS, CrunchBang, CRUX, \
-Debian, Deepin, DesaOS,Devuan, Dragora, elementary OS, EuroLinux, Evolve OS, Sulin, Exherbo, Fedora, Frugalware, Fuduntu, Funtoo, \
-Fux, Gentoo, gNewSense, Guix System, Hyperbola GNU/Linux-libre, januslinux, Jiyuu Linux, Kali Linux, KaOS, KDE neon, Kogaion, Korora, \
-LinuxDeepin, Linux Mint, LMDE, Logos, Mageia, Mandriva/Mandrake, Manjaro, Mer, Netrunner, NixOS, OBRevenge, openSUSE, \
-OS Elbrus, Oracle Linux, Parabola GNU/Linux-libre, Pardus, Parrot Security, PCLinuxOS, PeppermintOS, Proxmox VE, PureOS, Qubes OS, \
-Raspbian, Red Hat Enterprise Linux, ROSA, Sabayon, SailfishOS, Scientific Linux, Siduction, Slackware, Solus, Source Mage GNU/Linux, \
-SparkyLinux, SteamOS, SUSE Linux Enterprise, SwagArch, TinyCore, Trisquel, Ubuntu, Viperr, Void and Zorin OS and EndeavourOS"
+supported_distros="ALDOS, Alpine Linux, Amazon Linux, Antergos, \
+Arch Linux (Old and Current Logos), ArcoLinux, Artix Linux, blackPanther OS, \
+BLAG, BunsenLabs, CentOS, Chakra, Chapeau, Chrome OS, Chromium OS, CrunchBang, \
+CRUX, Debian, Deepin, DesaOS,Devuan, Dragora, elementary OS, EuroLinux, \
+Evolve OS, Sulin, Exherbo, Fedora, Frugalware, Fuduntu, Funtoo, Fux, Gentoo, \
+gNewSense, Guix System, Hyperbola GNU/Linux-libre, januslinux, Jiyuu Linux, \
+Kali Linux, KaOS, KDE neon, Kogaion, Korora, LinuxDeepin, Linux Mint, LMDE, \
+Logos, Mageia, Mandriva/Mandrake, Manjaro, Mer, Netrunner, NixOS, OBRevenge, \
+openSUSE, OS Elbrus, Oracle Linux, Parabola GNU/Linux-libre, Pardus, \
+Parrot Security, PCLinuxOS, PeppermintOS, Proxmox VE, PureOS, Qubes OS, \
+Raspbian, Red Hat Enterprise Linux, ROSA, Sabayon, SailfishOS, \
+Scientific Linux, Siduction, Slackware, Solus, Source Mage GNU/Linux, \
+SparkyLinux, SteamOS, SUSE Linux Enterprise, SwagArch, TinyCore, Trisquel, \
+Ubuntu, Viperr, Void and Zorin OS and EndeavourOS"
 
-supported_other="Dragonfly/Free/Open/Net BSD, Haiku, Mac OS X, Windows+Cygwin and Windows+MSYS2."
+supported_other="Dragonfly/Free/Open/Net BSD, Haiku, Mac OS X, Windows+Cygwin \
+and Windows+MSYS2."
 
-supported_dms="KDE, GNOME, Unity, Xfce, LXDE, Cinnamon, MATE, Deepin, CDE, RazorQt and Trinity."
+supported_dms="KDE, GNOME, Unity, Xfce, LXDE, Cinnamon, MATE, Deepin, CDE, \
+RazorQt and Trinity."
 
-supported_wms="2bwm, 9wm, Awesome, Beryl, Blackbox, Cinnamon, chromeos-wm, Compiz, deepin-wm, \
-dminiwm, dwm, dtwm, E16, E17, echinus, Emerald, FluxBox, FLWM, FVWM, herbstluftwm, howm, IceWM, KWin, \
-Metacity, monsterwm, Musca, Gala, Mutter, Muffin, Notion, OpenBox, PekWM, Ratpoison, Sawfish, ScrotWM, SpectrWM, \
+supported_wms="2bwm, 9wm, Awesome, Beryl, Blackbox, Cinnamon, chromeos-wm, \
+Compiz, deepin-wm, dminiwm, dwm, dtwm, E16, E17, echinus, Emerald, FluxBox, \
+FLWM, FVWM, herbstluftwm, howm, IceWM, KWin, Metacity, monsterwm, Musca, Gala, \
+Mutter, Muffin, Notion, OpenBox, PekWM, Ratpoison, Sawfish, ScrotWM, SpectrWM, \
 StumpWM, subtle, sway, TWin, WindowMaker, WMFS, wmii, Xfwm4, XMonad and i3."
 
 displayHelp () {
-	echo "${underline}Usage${c0}:"
-	echo "  ${0} [OPTIONAL FLAGS]"
-	echo
-	echo "screenFetch - a CLI Bash script to show system/theme info in screenshots."
-	echo
-	echo "${underline}Supported GNU/Linux Distributions${c0}:"
-	echo "${supported_distros}" | fold -s | sed 's/^/\t/g'
-	echo
-	echo "${underline}Other Supported Systems${c0}:"
-	echo "${supported_other}" | fold -s | sed 's/^/\t/g'
-	echo
-	echo "${underline}Supported Desktop Managers${c0}:"
-	echo "${supported_dms}" | fold -s | sed 's/^/\t/g'
-	echo
-	echo "${underline}Supported Window Managers${c0}:"
-	echo "${supported_wms}" | fold -s | sed 's/^/\t/g'
-	echo
-	echo "${underline}Supported Information Displays${c0}:"
-	echo "${valid_display[@]}" | fold -s | sed 's/^/\t/g'
-	echo
-	echo "${underline}Options${c0}:"
-	echo "   ${bold}-v${c0}                 Verbose output."
-	echo "   ${bold}-o 'OPTIONS'${c0}       Allows for setting script variables on the"
-	echo "                      command line. Must be in the following format..."
-	echo "                      'OPTION1=\"OPTIONARG1\";OPTION2=\"OPTIONARG2\"'"
-	echo "   ${bold}-d '+var;-var;var'${c0} Allows for setting what information is displayed"
-	echo "                      on the command line. You can add displays with +var,var. You"
-	echo "                      can delete displays with -var,var. Setting without + or - will"
-	echo "                      set display to that explicit combination. Add and delete statements"
-	echo "                      may be used in conjunction by placing a ; between them as so:"
-	echo "                      +var,var,var;-var,var. See above to find supported display names."
-	echo "   ${bold}-n${c0}                 Do not display ASCII distribution logo."
-	echo "   ${bold}-L${c0}                 Display ASCII distribution logo only."
-	echo "   ${bold}-N${c0}                 Strip all color from output."
-	echo "   ${bold}-w${c0}                 Wrap long lines."
-	echo "   ${bold}-t${c0}                 Truncate output based on terminal width (Experimental!)."
-	echo "   ${bold}-p${c0}                 Portrait output."
-	echo "   ${bold}-s [-u IMGHOST]${c0}    Using this flag tells the script that you want it"
-	echo "                      to take a screenshot. Use the -u flag if you would like"
-	echo "                      to upload the screenshots to one of the pre-configured"
-	echo "                      locations. These include: teknik, imgur, mediacrush and hmp."
-	echo "   ${bold}-c string${c0}          You may change the outputted colors with -c. The format is"
-	echo "                      as follows: [0-9][0-9],[0-9][0-9]. The first argument controls the"
-	echo "                      ASCII logo colors and the label colors. The second argument"
-	echo "                      controls the colors of the information found. One argument may be"
-	echo "                      used without the other. For terminals supporting 256 colors argument"
-	echo "                      may also contain other terminal control codes for bold, underline etc."
-	echo "                      separated by semicolon. For example -c \"4;1,1;2\" will produce bold"
-	echo "                      blue and dim red."
-	echo "   ${bold}-a 'PATH'${c0}          You can specify a custom ASCII art by passing the path"
-	echo "                      to a Bash script, defining \`startline\` and \`fulloutput\`"
-	echo "                      variables, and optionally \`labelcolor\` and \`textcolor\`."
-	echo "                      See the \`asciiText\` function in the source code for more"
-	echo "                      information on the variables format."
-	echo "   ${bold}-S 'COMMAND'${c0}       Here you can specify a custom screenshot command for"
-	echo "                      the script to execute. Surrounding quotes are required."
-	echo "   ${bold}-D 'DISTRO'${c0}        Here you can specify your distribution for the script"
-	echo "                      to use. Surrounding quotes are required."
-	echo "   ${bold}-A 'DISTRO'${c0}        Here you can specify the distribution art that you want"
-	echo "                      displayed. This is for when you want your distro"
-	echo "                      detected but want to display a different logo."
-	echo "   ${bold}-E${c0}                 Suppress output of errors."
-	echo "   ${bold}-V, --version${c0}      Display current script version."
-	echo "   ${bold}-h, --help${c0}         Display this help."
+  echo "${underline}Usage${c0}:"
+  echo -e "  ${0} [OPTIONAL FLAGS]\\n\\n"
+  echo "screenFetch - Bash CLI script to show system/theme info in screenshots."
+  echo -e "\\n${underline}Supported GNU/Linux Distributions${c0}:"
+  echo -e "${supported_distros}\\n\\n" | fold -s | sed 's/^/\t/g'
+  echo "${underline}Other Supported Systems${c0}:"
+  echo -e "${supported_other}\\n\\n" | fold -s | sed 's/^/\t/g'
+  echo "${underline}Supported Desktop Managers${c0}:"
+  echo -e "${supported_dms}\\n\\n" | fold -s | sed 's/^/\t/g'
+  echo "${underline}Supported Window Managers${c0}:"
+  echo -e "${supported_wms}\\n\\n" | fold -s | sed 's/^/\t/g'
+  echo "${underline}Supported Information Displays${c0}:"
+  echo -e "${valid_display[@]}\\n\\n" | fold -s | sed 's/^/\t/g'
+  echo "${underline}Options${c0}:"
+  echo "   ${bold}-v${c0}                 Verbose output."
+  echo "   ${bold}-o 'OPTIONS'${c0}       Allows for setting script variables on the"
+  echo "                      command line. Must be in the following format..."
+  echo "                      'OPTION1=\"OPTIONARG1\";OPTION2=\"OPTIONARG2\"'"
+  echo "   ${bold}-d '+var;-var;var'${c0} Allows for setting what information is displayed"
+  echo "                      on the command line. You can add displays with +var,var. You"
+  echo "                      can delete displays with -var,var. Setting without + or - will"
+  echo "                      set display to that explicit combination. Add and delete statements"
+  echo "                      may be used in conjunction by placing a ; between them as so:"
+  echo "                      +var,var,var;-var,var. See above to find supported display names."
+  echo "   ${bold}-n${c0}                 Do not display ASCII distribution logo."
+  echo "   ${bold}-L${c0}                 Display ASCII distribution logo only."
+  echo "   ${bold}-N${c0}                 Strip all color from output."
+  echo "   ${bold}-w${c0}                 Wrap long lines."
+  echo "   ${bold}-t${c0}                 Truncate output based on terminal width (Experimental!)."
+  echo "   ${bold}-p${c0}                 Portrait output."
+  echo "   ${bold}-s [-u IMGHOST]${c0}    Using this flag tells the script that you want it"
+  echo "                      to take a screenshot. Use the -u flag if you would like"
+  echo "                      to upload the screenshots to one of the pre-configured"
+  echo "                      locations. These include: teknik, imgur, mediacrush and hmp."
+  echo "   ${bold}-c string${c0}          You may change the outputted colors with -c. The format is"
+  echo "                      as follows: [0-9][0-9],[0-9][0-9]. The first argument controls the"
+  echo "                      ASCII logo colors and the label colors. The second argument"
+  echo "                      controls the colors of the information found. One argument may be"
+  echo "                      used without the other. For terminals supporting 256 colors argument"
+  echo "                      may also contain other terminal control codes for bold, underline etc."
+  echo "                      separated by semicolon. For example -c \"4;1,1;2\" will produce bold"
+  echo "                      blue and dim red."
+  echo "   ${bold}-a 'PATH'${c0}          You can specify a custom ASCII art by passing the path"
+  echo "                      to a Bash script, defining \`startline\` and \`fulloutput\`"
+  echo "                      variables, and optionally \`labelcolor\` and \`textcolor\`."
+  echo "                      See the \`asciiText\` function in the source code for more"
+  echo "                      information on the variables format."
+  echo "   ${bold}-S 'COMMAND'${c0}       Here you can specify a custom screenshot command for"
+  echo "                      the script to execute. Surrounding quotes are required."
+  echo "   ${bold}-D 'DISTRO'${c0}        Here you can specify your distribution for the script"
+  echo "                      to use. Surrounding quotes are required."
+  echo "   ${bold}-A 'DISTRO'${c0}        Here you can specify the distribution art that you want"
+  echo "                      displayed. This is for when you want your distro"
+  echo "                      detected but want to display a different logo."
+  echo "   ${bold}-E${c0}                 Suppress output of errors."
+  echo "   ${bold}-V, --version${c0}      Display current script version."
+  echo "   ${bold}-h, --help${c0}         Display this help."
 }
-
 
 displayVersion () {
-	echo "${underline}screenFetch${c0} - Version ${scriptVersion}"
-	echo "Created by and licensed to Brett Bohnenkamper <kittykatt@kittykatt.us>"
-	echo "OS X porting done almost solely by shrx (https://github.com/shrx) and John D. Duncan, III (https://github.com/JohnDDuncanIII)."
-	echo
-	echo "This is free software; see the source for copying conditions.  There is NO warranty; not even MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+  echo "${underline}screenFetch${c0} - Version ${scriptVersion}"
+  echo "Created by and licensed to Brett Bohnenkamper <kittykatt@kittykatt.us>"
+  echo -n "OS X porting done almost solely by shrx (https://github.com/shrx) "
+  echo -e "and John D. Duncan, III (https://github.com/JohnDDuncanIII).\\n\\n"
+  echo -n "This is free software; see the source for copying conditions. There "
+  echo -n "is NO warranty; not even MERCHANTABILITY or FITNESS FOR A PARTICULAR"
+  echo " PURPOSE."
 }
-
 
 #####################
 # Begin Flags Phase
 #####################
 
 case $1 in
-	--help) displayHelp; exit 0;;
-	--version) displayVersion; exit 0;;
+  --help)
+    displayHelp
+    exit 0
+    ;;
+  --version)
+    displayVersion
+    exit 0
+    ;;
 esac
 
-
 while getopts ":hsu:evVEnLNtlS:A:D:o:c:d:pa:w" flags; do
-	case $flags in
-		h) displayHelp; exit 0 ;;
-		s) screenshot='1' ;;
-		S) screenCommand="${OPTARG}" ;;
-		u) upload='1'; uploadLoc="${OPTARG}" ;;
-		v) verbosity=1 ;;
-		V) displayVersion; exit 0 ;;
-		E) errorSuppress='1' ;;
-		D) distro="${OPTARG}" ;;
-		A) asc_distro="${OPTARG}" ;;
-		t) truncateSet='Yes' ;;
-		n) display_type='Text' ;;
-		L) display_type='ASCII'; display_logo='Yes' ;;
-		o) overrideOpts="${OPTARG}" ;;
-		c) detectColors "${OPTARGS}" ;;
-		d) overrideDisplay="${OPTARG}" ;;
-		N) no_color='1' ;;
-		p) portraitSet='Yes' ;;
-		a) art="${OPTARG}" ;;
-		w) lineWrap='Yes' ;;
-		:) errorOut "Error: You're missing an argument somewhere. Exiting."; exit 1 ;;
-		?) errorOut "Error: Invalid flag somewhere. Exiting."; exit 1 ;;
-		*) errorOut "Error"; exit 1 ;;
-	esac
+  case $flags in
+    h)
+      displayHelp
+      exit 0
+      ;;
+    s)
+      screenshot='1'
+      ;;
+    S)
+      screenCommand="${OPTARG}"
+      ;;
+    u)
+      upload='1'
+      uploadLoc="${OPTARG}"
+      ;;
+    v)
+      verbosity=1
+      ;;
+    V)
+      displayVersion
+      exit 0
+      ;;
+    E)
+      errorSuppress='1'
+      ;;
+    D)
+      distro="${OPTARG}"
+      ;;
+    A)
+      asc_distro="${OPTARG}"
+      ;;
+    t)
+      truncateSet='Yes'
+      ;;
+    n)
+      display_type='Text'
+      ;;
+    L)
+      display_type='ASCII'
+      display_logo='Yes'
+      ;;
+    o)
+      overrideOpts="${OPTARG}"
+      ;;
+    c)
+      detectColors "${OPTARGS}"
+      ;;
+    d)
+      overrideDisplay="${OPTARG}"
+      ;;
+    N)
+      no_color='1'
+      ;;
+    p)
+      portraitSet='Yes'
+      ;;
+    a)
+      art="${OPTARG}"
+      ;;
+    w)
+      lineWrap='Yes'
+      ;;
+    :)
+      errorOut "Error: You're missing an argument somewhere. Exiting."
+      exit 1
+      ;;
+    ?)
+      errorOut "Error: Invalid flag somewhere. Exiting."
+      exit 1
+      ;;
+    *)
+      errorOut "Error"
+      exit 1
+      ;;
+  esac
 done
 
 ###################
 # End Flags Phase
 ###################
 
-
 ############################
 # Override Options/Display
 ############################
 
 if [[ "$overrideOpts" ]]; then
-	verboseOut "Found 'o' flag in syntax. Overriding some script variables..."
-	eval "${overrideOpts}"
+  verboseOut "Found 'o' flag in syntax. Overriding some script variables..."
+  eval "${overrideOpts}"
 fi
-
 
 #########################
 # Begin Detection Phase
@@ -742,9 +862,9 @@ detectdistro () {
 						distro="LMDE"
 						distro_codename="n/a"
 						distro_release="n/a"
-					#adding support for LMDE 3	
+					#adding support for LMDE 3
 					elif [[ "$(lsb_release -sd)" =~ "LMDE" ]]; then
-						distro="LMDE"	
+						distro="LMDE"
 					fi
 					;;
 				"openSUSE"|"openSUSE project"|"SUSE LINUX" | "SUSE")
@@ -939,7 +1059,7 @@ detectdistro () {
 						elif grep -q 'EuroLinux' /etc/os-release; then
 							distro="EuroLinux"
 						fi
-					fi	
+					fi
 
 					[[ "${distro}" == "Neon" ]] && distro="KDE neon"
 					[[ "${distro}" == "SLED" || "${distro}" == "sled" || "${distro}" == "SLES" || "${distro}" == "sles" ]] && distro="SUSE Linux Enterprise"
@@ -1444,7 +1564,7 @@ detectpkgs () {
 				haikualpharelease="yes"
 				pkgs=$(installoptionalpackage -l | sed -n '3p' | wc -w)
 			fi
-		;;	
+		;;
 	esac
 	if [[ "${OSTYPE}" =~ "linux" && -z "${wsl}" ]] && snap list >/dev/null 2>&1; then
 		offset=1
@@ -1655,7 +1775,7 @@ DetectIntelGPU() {
 
 	case $gpu in
 		*mfb)
-			gpu=$(lspci | grep -i vga | awk -F ": " '{print $2}') 
+			gpu=$(lspci | grep -i vga | awk -F ": " '{print $2}')
 			;;
 		*intel*)
 			gpu="intel"
@@ -2496,11 +2616,11 @@ detectwmtheme () {
 			'KWin'*)
 				if [[ -z $KDE_CONFIG_DIR ]]; then
 					if type -p kde5-config >/dev/null 2>&1; then
-						KDE_CONFIG_DIR=$(kde5-config --localprefix)
+						KDE_CONFIG_DIR=$(kf5-config --path config)
 					elif type -p kde4-config >/dev/null 2>&1; then
-						KDE_CONFIG_DIR=$(kde4-config --localprefix)
+						KDE_CONFIG_DIR=$(kde4-config --path config)
 					elif type -p kde-config >/dev/null 2>&1; then
-						KDE_CONFIG_DIR=$(kde-config --localprefix)
+						KDE_CONFIG_DIR=$(kde-config --path config)
 					fi
 				fi
 				if [[ -n $KDE_CONFIG_DIR ]]; then
@@ -3218,27 +3338,27 @@ asciiText () {
 			fulloutput=(
 
 "${c1}                    /-                   "
-"${c1}                   ooo:                  %s"     
+"${c1}                   ooo:                  %s"
 "${c1}                  yoooo/                 %s"
 "${c1}                 yooooooo                %s"
-"${c1}                yooooooooo               %s" 
+"${c1}                yooooooooo               %s"
 "${c1}               yooooooooooo              %s"
 "${c1}             .yooooooooooooo             %s"
 "${c1}            .oooooooooooooooo            %s"
 "${c1}           .oooooooarcoooooooo           %s"
-"${c1}          .ooooooooo-oooooooooo          %s"   
+"${c1}          .ooooooooo-oooooooooo          %s"
 "${c1}         .ooooooooo-  oooooooooo         %s"
 "${c1}        :ooooooooo.    :ooooooooo        %s"
 "${c1}       :ooooooooo.      :ooooooooo       %s"
-"${c1}      :oooarcooo         .oooarcooo      %s"  
-"${c1}     :ooooooooy           .ooooooooo     %s" 
+"${c1}      :oooarcooo         .oooarcooo      %s"
+"${c1}     :ooooooooy           .ooooooooo     %s"
 "${c1}    :ooooooooo   ${c2}/ooooooooooooooooooo${c1}    %s"
-"${c1}   :ooooooooo      ${c2}.-ooooooooooooooooo.${c1}  %s"   
-"${c1}  ooooooooo-             ${c2}-ooooooooooooo.${c1} %s"    
-"${c1} ooooooooo-                 ${c2}.-oooooooooo.${c1}%s"   
+"${c1}   :ooooooooo      ${c2}.-ooooooooooooooooo.${c1}  %s"
+"${c1}  ooooooooo-             ${c2}-ooooooooooooo.${c1} %s"
+"${c1} ooooooooo-                 ${c2}.-oooooooooo.${c1}%s"
 "${c1}ooooooooo.                     ${c2}-ooooooooo${c1}%s")
 		;;
-		
+
 		"Mint")
 			if [[ "$no_color" != "1" ]]; then
 				c1=$(getColor 'white') # White
@@ -5598,11 +5718,11 @@ asciiText () {
 			fulloutput=(
 
 "${c1}                                       %s"
-"${c1}           DZZZZZZZZZZZZZ              %s" 
+"${c1}           DZZZZZZZZZZZZZ              %s"
 "${c1}         ZZZZZZZZZZZZZZZZZZZ           %s"
 "${c1}          ZZZZZZZZZZZZZZZZZZZZ         %s"
 "${c1}           OZZZZZZZZZZZZZZZZZZZZ       %s"
-"${c1}   Z         ZZZ    8ZZZZZZZZZZZZ      %s" 
+"${c1}   Z         ZZZ    8ZZZZZZZZZZZZ      %s"
 "${c1}  ZZZ                   ZZZZZZZZZZ     %s"
 "${c1} ZZZZZN                   ZZZZZZZZZ    %s"
 "${c1} ZZZZZZZ                    ZZZZZZZZ   %s"
@@ -5836,10 +5956,10 @@ asciiText () {
 "${c1}	 ++${c3}77777777777777777${c5}++++        %s"
 "${c1}	++${c3}7777777777777777777${c5}++++       %s"
 "${c1}      +++${c3}777777777777777777777${c5}++++	%s"
-"${c1}    ++++${c3}7777777777777777777777${c5}+++++  	%s"	
-"${c1}   ++++${c3}77777777777777777777777${c5}+++++  	%s"	
-"${c1}  +++++${c3}777777777777777777777777${c5}+++++	%s"	
-"${c5}       +++++++${c3}7777777777777777${c5}++++++	%s"	
+"${c1}    ++++${c3}7777777777777777777777${c5}+++++  	%s"
+"${c1}   ++++${c3}77777777777777777777777${c5}+++++  	%s"
+"${c1}  +++++${c3}777777777777777777777777${c5}+++++	%s"
+"${c5}       +++++++${c3}7777777777777777${c5}++++++	%s"
 "${c5}      +++++++++++++++++++++++++++++     %s"
 "${c5}     +++++++++++++++++++++++++++        %s"
 "                                      	%s"
@@ -6477,7 +6597,7 @@ WIRELESS_TOOLS=$(iwconfig --version 2>&1 | awk '(NR==1 && ($3 == "version")) {pr
 
 distro=$(echo $distro | sed 's/\"//g')
 
-cat > ~/.i-nex/screenfetch.json <<EOF
+cat > ${HOME}/.config/i-nex/screenfetch.json <<EOF
 {
   "DE": "$DE",
   "WM": "$WM",

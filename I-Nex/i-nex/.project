@@ -1,6 +1,7 @@
 # Gambas Project File 3.0
 Title=I-Nex
 Startup=MStart
+Profiling=1
 Icon=logo/i-nex.0.4.x.png
 Version=7.6.1
 Component=gb.image
@@ -10,7 +11,7 @@ Component=gb.desktop
 Component=gb.desktop.x11
 Description="I-Nex is an application that gathers information about the hardware components\ninstalled in your system the configuration of the software using it, then neatly\norganizes it using an user interface similar to the popular Windows tool CPU-Z.\n\nI-Nex can display information for the following components: CPU, GPU, RAM,\nmotherboard, sound, permanent and removable storage devices (hard drives),\nnetwork interfaces and USB, as well as some system info like the hostname,\nGNU/Linux distribution and version, Xorg, GCC, GLX versions and Linux kernel\ninfo.\n\nBesides being able to display hardware information, I-Nex can also generate an\nadvanced report with options to select what to include and, optionally, send the\nreport to a service such as Pastebin (and others) to easily share with someone\nwho is trying to help you troubleshoot a problem remotely. It also features an\noption to take a screenshot of the I-Nex window directly from the application.\n\nThe difference between I-Nex and the other hardware information GUI tools\navailable for Linux is that the information is better organized, displayed\nfaster (when compared to lshw-gtk, for instance) and presented in a way that’s\neasier to understand."
 Authors="2006-2012, Stéphane Graber <stgraber@stgraber.org>\n2007-2013, Adam Jackson <ajax@redhat.com>\n2011-2019, eloaders <eloaders@linux.pl>\n2020, Peter J. Mello <admin@petermello.net>"
-Environment="LANG=C\nLC_ALL=C\nLIBOVERLAY_SCROLLBAR=0\nAPPMENU_DISPLAY_BOTH=1"
+Environment="GB_JIT_DEBUG=1\nLANG=C\nLC_ALL=C\nLIBOVERLAY_SCROLLBAR=0\nAPPMENU_DISPLAY_BOTH=1"
 TabSize=2
 Language=en
 ControlPublic=1
