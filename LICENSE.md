@@ -1,5 +1,9 @@
 # GNU LESSER GENERAL PUBLIC LICENSE
 
+[SPDX-FileCopyrightText: © 2020 Peter J. Mello <admin@petermello.net>]::
+
+[SPDX-License-Identifier: CC0-1.0]::
+
 Version 3, 29 June 2007
 
 Copyright (C) 2007 Free Software Foundation, Inc.

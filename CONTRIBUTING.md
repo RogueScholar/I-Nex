@@ -1,5 +1,9 @@
 # Contributing to I-Nex
 
+[SPDX-FileCopyrightText: © 2020 Peter J. Mello <admin@petermello.net>]::
+
+[SPDX-License-Identifier: CC0-1.0]::
+
 ## First off, thank you for considering contributing to I-Nex
 
 It's awesome people like you that make I-Nex such a great tool. Know that you

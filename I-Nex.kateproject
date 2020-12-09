@@ -1,0 +1,24 @@
+{
+  "comments": [
+    {
+      "SPDX-FileCopyrightText": "© 2020 Peter J. Mello <admin@petermello.net>",
+      "SPDX-License-Identifier": "CC0-1.0"
+    }
+  ],
+  "name": "I-Nex",
+  "directory": ".",
+  "files": [ { "git": 1 } ],
+  "build": {
+    "directory": ".",
+    "default_target": "I-Nex",
+    "clean_target": "root_clean",
+    "targets": [
+      { "name": "I-Nex", "build_cmd": "make -j$(nproc)" },
+      { "name": "EDID", "build_cmd": "make -j1 -C JSON" },
+      { "name": "icons", "build_cmd": "make -C pixmaps" },
+      { "name": "manpages", "build_cmd": "make -j1 -C manpages" },
+      { "name": "debian", "build_cmd": "debuild -F -sa" },
+      { "name": "root_clean", "build_cmd": "make distclean" }
+    ]
+  }
+}

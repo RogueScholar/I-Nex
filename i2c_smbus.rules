@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: © 2014 eloaders <eloaders@linux.pl>
+#
+# SPDX-License-Identifier: LGPL-3.0-or-later
+# ------------------------------------------------------------------------------
 SUBSYSTEMS=="pci", ATTRS{vendor}=="0x8086", ATTRS{device}=="0x7113", RUN+="/sbin/modprobe i2c-piix4"
 SUBSYSTEMS=="pci", ATTRS{vendor}=="0x8086", ATTRS{device}=="0x719b", RUN+="/sbin/modprobe i2c-piix4"
 SUBSYSTEMS=="pci", ATTRS{vendor}=="0x8086", ATTRS{device}=="0x2413", RUN+="/sbin/modprobe i2c-i801"

@@ -2,7 +2,7 @@
 #
 # SPDX-FileCopyrightText: © 2016 eloaders <eloaders@linux.pl>
 #
-# SPDX-License-Identifier: CC0-1.0
+# SPDX-License-Identifier: LGPL-3.0-or-later
 # ------------------------------------------------------------------------------
 BEGIN {
 	REPO_URL = getRepoURL()

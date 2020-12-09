@@ -3,7 +3,7 @@
 [SPDX-FileCopyrightText: © 2014-2016 eloaders <eloaders@linux.pl>]::
 [SPDX-FileCopyrightText: © 2020 Peter J. Mello <admin@petermello.net>]::
 
-[SPDX-License-Identifier: CC0-1.0]::
+[SPDX-License-Identifier: LGPL-3.0-or-later]::
 
 [![Screenshot](http://i-nex.linux.pl/wp-content/uploads/2016/09/09072016074858692-1.png)](https://i-nex.linux.pl/screenshots/)
 

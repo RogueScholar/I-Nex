@@ -2,7 +2,7 @@
 
 [SPDX-FileCopyrightText: © 2016 eloaders <eloaders@linux.pl>]::
 
-[SPDX-License-Identifier: CC0-1.0]::
+[SPDX-License-Identifier: LGPL-3.0-or-later]::
 
 ## 7.6.1
 - Update ([017bee2](https://github.com/i-nex/I-Nex/commit/017bee2a335caf2e9dd85e8259bb53d2262acbd6))

@@ -1,9 +1,16 @@
 #!/usr/bin/make -f
 # -*- mode: makefile-gmake; coding: utf-8 -*-
+#
+# SPDX-FileCopyrightText: © 2014-2016 eloaders <eloaders@linux.pl>
+# SPDX-FileCopyrightText: © 2020 Peter J. Mello <admin@petermello.net>
+#
+# SPDX-License-Identifier: LGPL-3.0-or-later
+# ------------------------------------------------------------------------------
 
 PN                       ::= i-nex
 APP_NAME                 ::= $(PN)
 ARCH                     ::= $(shell uname -m)
+BASH_PATH                ::= $(shell which bash)
 CC                        ?= gcc
 CFLAGS                    ?= -g -Wall
 COMPRESS                 ::= gzip -9
@@ -21,6 +28,8 @@ PREFIX                    ?= /usr
 PWD                      ::= $(shell pwd)
 RM                       ::= rm -f
 RMDIR_OPT                ::= -R
+SHELL                    ::= $(shell realpath -Leq $(BASH_PATH))
+SHELL                     ?= /bin/sh
 STATIC                   ::= true
 UDEV_RULES_DIR           ::= /usr/lib/udev/rules.d
 

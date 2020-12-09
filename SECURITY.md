@@ -1,5 +1,9 @@
 # Security Policy
 
+[SPDX-FileCopyrightText: © 2020 Peter J. Mello <admin@petermello.net>]::
+
+[SPDX-License-Identifier: CC0-1.0]::
+
 ## Supported Versions
 
 | Version | Supported          |

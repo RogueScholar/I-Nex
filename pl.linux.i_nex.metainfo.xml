@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+SPDX-FileCopyrightText: © 2019 eloaders <eloaders@linux.pl>
+SPDX-FileCopyrightText: © 2020 Peter J. Mello <admin@petermello.net>
+SPDX-License-Identifier: CC0-1.0
+-->
 <component type="desktop-application">
   <id>pl.linux.i_nex</id>
   <name>I-Nex</name>
@@ -73,16 +78,19 @@
       <image type="source" width="489" height="569">
         https://i-nex.linux.pl/wp-content/uploads/2016/09/09072016074858692-1.png
       </image>
+      <caption>CPU identification tab</caption>
     </screenshot>
     <screenshot>
       <image type="source" width="489" height="569">
         https://i-nex.linux.pl/wp-content/uploads/2016/09/09072016080049101-1.png
       </image>
+      <caption>System details tab</caption>
     </screenshot>
     <screenshot>
       <image type="source" width="489" height="569">
         https://i-nex.linux.pl/wp-content/uploads/2016/09/09072016080027538-1.png
       </image>
+      <caption>GPU identification tab</caption>
     </screenshot>
   </screenshots>
   <url type="homepage">https://i-nex.linux.pl/</url>

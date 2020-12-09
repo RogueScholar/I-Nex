@@ -1,3 +1,8 @@
+# SPDX-FileCopyrightText: © 2011-2019 eloaders <eloaders@linux.pl>
+# SPDX-FileCopyrightText: © 2020 Peter J. Mello <admin@petermello.net>
+#
+# SPDX-License-Identifier: LGPL-3.0-or-later
+# ------------------------------------------------------------------------------
 [Desktop Entry]
 Version=1.1
 Type=Application
@@ -18,6 +23,6 @@ Hidden=false
 Actions=Library;
 
 [Desktop Action Library]
-Name=Display major system library versions
+Name=Display system library versions
 Icon=i-nex
 Exec=i-nex.gambas --library
