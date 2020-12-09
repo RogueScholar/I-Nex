@@ -63,8 +63,8 @@ Public Sub Form_Open()
      End Select
   Endif
 
-  Logs("Call to MLibcpuid14", Logger.Info)
-       Object.Call(MLibcpuid14, "main")
+  Logs("Call to MLibcpuid15", Logger.Info)
+       Object.Call(MLibcpuid15, "main")
 
   Try data = Open "/proc/mtrr" For Input
 

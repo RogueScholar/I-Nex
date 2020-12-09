@@ -1,19 +1,37 @@
 #!/usr/bin/env bash
-# Copyright (c) 2013-2014 Michał Głowienka <eloaders@linux.pl>
+#
+# SPDX-FileCopyrightText: © 2013-2016 Michał Głowienka <eloaders@linux.pl>
+#
+# SPDX-License-Identifier: LGPL-3.0-or-later
+# ------------------------------------------------------------------------------
+
 lspci_nonpre() {
-lspci -v -s `lspci | awk '/VGA/{print $1}'` | sed -n '/Memory.*, prefetchable/s/.*\[size=\([^]]\+\)\]/\1/p'
+  lspci -v -s $(lspci | awk '/VGA/{print $1}') |
+    sed -n '/Memory.*, prefetchable/s/.*\[size=\([^]]\+\)\]/\1/p'
 }
 
 lspci_pre() {
-lspci -v -s `lspci | awk '/VGA/{print $1}'` | sed -n '/Memory.*, non-prefetchable/s/.*\[size=\([^]]\+\)\]/\1/p'
+  lspci -v -s $(lspci | awk '/VGA/{print $1}') |
+    sed -n '/Memory.*, non-prefetchable/s/.*\[size=\([^]]\+\)\]/\1/p'
 }
+
 error() {
-printf '\ni-nex-lspci is part of I-Nex project licensed under LGPL v3\n'
-printf 'This program chow prefetchable and nonprefetchable GPU memory\n'
-printf '\nusage: i-nex-lspci nonprefetchable|prefetchable\n\n'
+  printf '\ni-nex-lspci is part of the I-Nex project, licensed under LGPL v3.\n'
+  printf 'This program shows prefetchable and non-prefetchable GPU memory.\n'
+  printf '\nUsage: i-nex-lspci [nonprefetchable|prefetchable]\n\n'
 }
-case $1 in
-        nonprefetchable) lspci_nonpre; exit 0;;
-        prefetchable) lspci_pre; exit 0;;
-        *) error; exit 0;;
+
+case ${1} in
+  nonprefetchable)
+    lspci_nonpre
+    exit 0
+    ;;
+  prefetchable)
+    lspci_pre
+    exit 0
+    ;;
+  *)
+    error
+    exit 0
+    ;;
 esac

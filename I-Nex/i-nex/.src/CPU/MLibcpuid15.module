@@ -2,15 +2,16 @@
 
 ' The module was written by vuott from http://www.gambas-it.org/
 ' http://www.gambas-it.org/smf/index.php?action=profile;u=402
-Library "libcpuid:14.0.1"
+Library "libcpuid:15.0.0"
 
-Public Struct cpu_raw_data_t 
+Public Struct cpu_raw_data_t
   basic_cpuid[32, 4] As Integer
   ext_cpuid[32, 4] As Integer
-  intel_fn4[8, 4] As Integer
-  intel_fn11[4, 4] As Integer
-  intel_fn12h[4, 4] As Integer
-  intel_fn14h[4, 4] As Integer
+  intel_fn4[32, 4] As Integer
+  intel_fn11[32, 4] As Integer
+  intel_fn12h[32, 4] As Integer
+  intel_fn14h[32, 4] As Integer
+  amd_fn8000001dh[32, 4] As Integer
 End Struct
 
 Public Struct cpu_mark_t
@@ -67,31 +68,33 @@ Public Sub Main()
   Dim obs As Observer
   Dim TextBox As TextBox
   Dim TextArea As TextArea
-  Dim raw As New Cpu_raw_data_t 
+  Dim raw As New Cpu_raw_data_t
   Dim data As Pointer
   Dim mark As New Cpu_mark_t
   Dim au As String
   Dim cpu_vendor As String[]
   Dim i As Integer
-  
-  cpu_vendor = ["Intel CPU", "AMD CPU", "Cyrix CPU", "NexGen CPU", "Transmeta CPU", "x86 CPU by UMC", "x86 CPU by IDT",
-                "x86 CPU by Rise Technology", "x86 CPU by SiS", "x86 CPU by National Semiconductor", ""]
-     
+
+  cpu_vendor = ["Intel CPU", "AMD CPU", "Cyrix CPU", "NexGen CPU",
+                "Transmeta CPU", "x86 CPU by UMC", "x86 CPU by IDT",
+                "x86 CPU by Rise Technology", "x86 CPU by SiS",
+                "x86 CPU by National Semiconductor", ""]
+
     If Not cpuid_present() Then Error.Raise("Sorry, your CPU doesn't support CPUID!")
-   
+
     If cpuid_get_raw_data(raw) < 0 Then
       Error.Raise("Sorry, cannot get the CPUID raw data. \nError: " & cpuid_error())
     Endif
-  
+
       data = Alloc(SizeOf(gb.Byte), 432)
-  
+
     If cpu_identify(raw, data) < 0 Then
       Error.Raise("Sorrry, CPU identification failed. !\nError: " & cpuid_error())
     Endif
-   
+
       cpu_tsc_mark(mark)
       cpu_tsc_unmark(mark)
-    
+
     sa = Finfosys.GridView4.Children[0]
     obs = New Observer(sa) As "Scroll"
     With Finfosys.GridView4
@@ -108,7 +111,7 @@ Public Sub Main()
       .Border = False
       .ReadOnly = True
     End With
-    
+
     With TextBox = New TextBox(sa) As "CPU_CODENAME"
       .X = Finfosys.GridView4.Columns[0].X
       .Y = Finfosys.GridView4.Rows[1].Y
@@ -128,7 +131,7 @@ Public Sub Main()
       .Border = False
       .ReadOnly = True
     End With
-    
+
     With TextBox = New TextBox(sa) As "VENDOR"
       .X = Finfosys.GridView4.Columns[0].X
       .Y = Finfosys.GridView4.Rows[3].Y
@@ -138,7 +141,7 @@ Public Sub Main()
       .Border = False
       .ReadOnly = True
     End With
-    
+
     With TextBox = New TextBox(sa) As "FAMILY"
       .X = Finfosys.GridView4.Columns[0].X
       .Y = Finfosys.GridView4.Rows[4].Y
@@ -148,7 +151,7 @@ Public Sub Main()
       .Border = False
       .ReadOnly = True
     End With
-    
+
     With TextBox = New TextBox(sa) As "MODEL"
       .X = Finfosys.GridView4.Columns[0].X
       .Y = Finfosys.GridView4.Rows[5].Y
@@ -158,7 +161,7 @@ Public Sub Main()
       .Border = False
       .ReadOnly = True
     End With
-    
+
     With TextBox = New TextBox(sa) As "STEPPING"
       .X = Finfosys.GridView4.Columns[0].X
       .Y = Finfosys.GridView4.Rows[6].Y
@@ -168,7 +171,7 @@ Public Sub Main()
       .Border = False
       .ReadOnly = True
     End With
-    
+
     With TextBox = New TextBox(sa) As "EXT_FAMILY"
       .X = Finfosys.GridView4.Columns[0].X
       .Y = Finfosys.GridView4.Rows[7].Y
@@ -178,7 +181,7 @@ Public Sub Main()
       .Border = False
       .ReadOnly = True
     End With
-    
+
     With TextBox = New TextBox(sa) As "EXT_MODEL"
       .X = Finfosys.GridView4.Columns[0].X
       .Y = Finfosys.GridView4.Rows[8].Y
@@ -188,7 +191,7 @@ Public Sub Main()
       .Border = False
       .ReadOnly = True
     End With
-    
+
     With TextBox = New TextBox(sa) As "NUM_CORES"
       .X = Finfosys.GridView4.Columns[0].X
       .Y = Finfosys.GridView4.Rows[9].Y
@@ -198,7 +201,7 @@ Public Sub Main()
       .Border = False
       .ReadOnly = True
     End With
-    
+
     With TextBox = New TextBox(sa) As "NUM_LOGICAL_CPUS"
       .X = Finfosys.GridView4.Columns[0].X
       .Y = Finfosys.GridView4.Rows[10].Y
@@ -208,7 +211,7 @@ Public Sub Main()
       .Border = False
       .ReadOnly = True
     End With
-    
+
     With TextBox = New TextBox(sa) As "TOTAL_LOGICAL_CPUS"
       .X = Finfosys.GridView4.Columns[0].X
       .Y = Finfosys.GridView4.Rows[11].Y
@@ -218,7 +221,7 @@ Public Sub Main()
       .Border = False
       .ReadOnly = True
     End With
-    
+
     With TextBox = New TextBox(sa) As "L1_DATA_CACHE"
       .X = Finfosys.GridView4.Columns[0].X
       .Y = Finfosys.GridView4.Rows[12].Y
@@ -230,7 +233,7 @@ Public Sub Main()
       .Border = False
       .ReadOnly = True
     End With
-    
+
     With TextBox = New TextBox(sa) As "L1_INSTRUCTION_CACHE"
       .X = Finfosys.GridView4.Columns[0].X
       .Y = Finfosys.GridView4.Rows[13].Y
@@ -240,37 +243,37 @@ Public Sub Main()
       .Border = False
       .ReadOnly = True
     End With
-    
+
     With TextBox = New TextBox(sa) As "L2_CACHE"
       .X = Finfosys.GridView4.Columns[0].X
       .Y = Finfosys.GridView4.Rows[14].Y
       .W = Finfosys.GridView4[14, 0].W
       .H = Finfosys.GridView4[14, 0].H
-      .Text = "L2 Cache: " & Int@(data + 252) & " KB" & 
-              ", Assoc: " & IIf(Int@(data + 268) > 0, Int@(data + 268) & "-way", "undetermined") & 
+      .Text = "L2 Cache: " & Int@(data + 252) & " KB" &
+              ", Assoc: " & IIf(Int@(data + 268) > 0, Int@(data + 268) & "-way", "undetermined") &
               ", Cacheline: " & IIf(Int@(data + 284) > 0, Int@(data + 280) & " byte", "undetermined")
       .Border = False
       .ReadOnly = True
     End With
-    
+
     With TextBox = New TextBox(sa) As "L3_CACHE"
       .X = Finfosys.GridView4.Columns[0].X
       .Y = Finfosys.GridView4.Rows[15].Y
       .W = Finfosys.GridView4[15, 0].W
       .H = Finfosys.GridView4[15, 0].H
-      .Text = "L3 Cache: " & Int@(data + 256) & " KB" & 
-              ", Assoc: " & IIf(Int@(data + 272) > 0, Int@(data + 272) & "-way", "undetermined") & 
+      .Text = "L3 Cache: " & Int@(data + 256) & " KB" &
+              ", Assoc: " & IIf(Int@(data + 272) > 0, Int@(data + 272) & "-way", "undetermined") &
               ", Cacheline: " & IIf(Int@(data + 288) > 0, Int@(data + 288) & " byte", "undetermined")
       .Border = False
       .ReadOnly = True
     End With
-    
+
     With TextBox = New TextBox(sa) As "L4_CACHE"
       .X = Finfosys.GridView4.Columns[0].X
       .Y = Finfosys.GridView4.Rows[16].Y
       .W = Finfosys.GridView4[16, 0].W
       .H = Finfosys.GridView4[16, 0].H
-      .Text = "L4 Cache: " & Int@(data + 260) & " KB" & 
+      .Text = "L4 Cache: " & Int@(data + 260) & " KB" &
               ", Assoc: " & IIf(Int@(data + 276) > 0, Int@(data + 276) & "-way", "undetermined") &
               ", Cacheline: " & IIf(Int@(data + 292) > 0, Int@(data + 292) & " byte", "undetermined")
       .Border = False
@@ -286,7 +289,7 @@ Public Sub Main()
       .Border = False
       .ReadOnly = True
     End With
-    
+
      With TextBox = New TextBox(sa) As "CPU_CLOCK"
       .X = Finfosys.GridView4.Columns[0].X
       .Y = Finfosys.GridView4.Rows[18].Y
@@ -296,11 +299,11 @@ Public Sub Main()
               ", By OS:" & cpu_clock_by_os() & " Mhz" &
               ", By IC:" & cpu_clock_by_ic(25, 16) & " Mhz" &
               ", Measure:" & cpu_clock_measure(400, 1) & " Mhz"
-      
+
       .Border = False
       .ReadOnly = True
     End With
-    
+
     With TextBox = New TextBox(sa) As "CPU_MARK_TSC"
       .X = Finfosys.GridView4.Columns[0].X
       .Y = Finfosys.GridView4.Rows[19].Y
@@ -308,12 +311,12 @@ Public Sub Main()
       .H = Finfosys.GridView4[19, 0].H
       .Text = "CPU Mark TSC: " & mark.tsc &
               ", Sys Clock:" & "µs " & mark.sys_clock
-      
+
       .Border = False
       .ReadOnly = True
     End With
-  '   
-  '   
+  '
+  '
   ' Print "   \"VENDOR_STR\":           "; String@(data)
   ' Print "   \"CPU_CODENAME\":         "; String@(data + 296)
   ' Print "   \"BRAND_STR\":            "; String@(data + 16)
@@ -339,17 +342,17 @@ Public Sub Main()
   ' Print "   \"L2_CACHELINE\":         "; IIf(Int@(data + 284) > 0, Int@(data + 284) & " byte", "intedeterminato")
   ' Print "   \"L3_CACHELINE\":         "; IIf(Int@(data + 288) > 0, Int@(data + 288) & " byte", "intedeterminato")
   ' Print "   \"L4_CACHELINE\":         "; IIf(Int@(data + 292) > 0, Int@(data + 292) & " byte", "intedeterminato")
-  ' 
+  '
   ' Print "   \"SSE_SIZE\":             "; Int@(data + 360); " bit "; au
   ' Print "   \"CPU_CLOCK\":            "; cpu_clock(); " Mhz"
   ' Print "   \"CPU_CLOCK_BY_OS\":      "; cpu_clock_by_os(); " Mhz"
-  ' Print "   \"CPU_CLOCK_BY_IC\":      "; cpu_clock_by_ic(25, 16); " Mhz" 
+  ' Print "   \"CPU_CLOCK_BY_IC\":      "; cpu_clock_by_ic(25, 16); " Mhz"
   ' Print "   \"CPU_CLOCK_MEASURE\":    "; cpu_clock_measure(400, 1); " Mhz"
   ' Print "   \"MARK_TSC\":             "; mark.tsc
   ' Print "   \"MARK_SYS_CLOCK\":       "; "µs "; mark.sys_clock
   For i = 0 To 109
     Finfosys.ListBox2.Add("FEATURE: " & cpu_feature_str(i) & IIf(Byte@(data + (i + 84)), " Present", " Absent"))
   Next
-  
+
   Free(data)
 End

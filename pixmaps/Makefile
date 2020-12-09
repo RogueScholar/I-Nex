@@ -3,24 +3,25 @@
 
 include ../i-nex.mk
 
-IMG_SIZES ::= 16 22 32 48 64 128 256
+IMG_SIZES  ::= 16 22 32 48 64 128 256
+appicondir ::= $(DESTDIR)$(PREFIX)/share/icons/hicolor
 
 all: install
 
 install:
 	@cp $(CURDIR)/i-nex.png $(CURDIR)/i-nex-256.png
 	for px in $(IMG_SIZES) ; do \
-		install -d $(DESTDIR)$(PREFIX)/share/icons/hicolor/$${px}x$${px}/apps
+		install -d $(appicondir)/$${px}x$${px}/apps ; \
 		cp -f $(CURDIR)/i-nex-$${px}.png \
-			$(DESTDIR)$(PREFIX)/share/icons/hicolor/$${px}x$${px}/apps/i-nex.png ; \
-		chmod 0644 $(DESTDIR)$(PREFIX)/share/icons/hicolor/$${px}x$${px}/apps/i-nex.png ; \
+			$(appicondir)/$${px}x$${px}/apps/i-nex.png ; \
+		chmod 0644 $(appicondir)/$${px}x$${px}/apps/i-nex.png ; \
 	done
 	@$(RM) $(CURDIR)/i-nex-256.png
 
 uninstall:
 	for px in $(IMG_SIZES) ; do \
-		test -f $(DESTDIR)$(PREFIX)/share/icons/hicolor/$${px}x$${px}/apps/i-nex.png && \
-			$(RM) $(DESTDIR)$(PREFIX)/share/icons/hicolor/$${px}x$${px}/apps/i-nex.png ; \
+		test -f $(appicondir)/$${px}x$${px}/apps/i-nex.png && \
+			$(RM) $(appicondir)/$${px}x$${px}/apps/i-nex.png ; \
 	done
 
 .PHONY: all install uninstall
